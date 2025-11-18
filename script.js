@@ -1124,34 +1124,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('❌ Login button not found');
             }
 
-            // Close button in welcome notification - KEEP onclick as fallback
+            // Close button in welcome notification - ROBUST EVENT HANDLING
             const closeBtn = document.querySelector('.welcome-actions .btn-close');
-            if (closeBtn) {
-                // DON'T remove onclick - keep it as fallback
-                // Just add additional event handlers
-
-                closeBtn.addEventListener('click', function(e) {
-                    console.log('🔴 Close button clicked via event listener');
-                    hideWelcome();
-                }, true); // Use capture phase
-
-                closeBtn.addEventListener('touchstart', function(e) {
-                    console.log('🔴 Close button touched via event listener');
-                    hideWelcome();
-                }, { passive: true });
-
-                // Add mousedown for immediate response
-                closeBtn.addEventListener('mousedown', function(e) {
-                    console.log('🔴 Close button mousedown');
+            const closeBtnById = document.getElementById('welcomeCloseBtn');
+            
+            function setupCloseButton(btn) {
+                if (!btn) return;
+                
+                // Remove any existing event listeners by cloning
+                const freshBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(freshBtn, btn);
+                
+                // Single, reliable click handler
+                freshBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    console.log('🔴 Close button clicked - hiding welcome');
                     hideWelcome();
                 });
-
-                console.log('✅ Close button events attached (keeping onclick fallback)');
-            } else {
-                console.log('❌ Close button not found');
+                
+                // Touch handler for mobile
+                freshBtn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    console.log('🔴 Close button touched - hiding welcome');
+                    hideWelcome();
+                });
+                
+                console.log('✅ Close button events attached successfully');
             }
-
-            // Modal close buttons
+            
+            setupCloseButton(closeBtn || closeBtnById);            // Modal close buttons
             const modalCloseButtons = document.querySelectorAll('.modal-close');
             modalCloseButtons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
