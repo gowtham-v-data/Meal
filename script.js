@@ -261,7 +261,8 @@ class NutritionAnalyzer {
         // Upload area click - always open file browser
         if (this.uploadArea) {
             this.uploadArea.addEventListener('click', () => {
-                if (!this.selectedImage && this.imageInput) {
+                if (this.imageInput) {
+                    console.log('📤 Upload area clicked - opening file browser');
                     this.imageInput.click(); // Open file browser on all devices
                 }
             });
@@ -302,9 +303,13 @@ class NutritionAnalyzer {
     }
 
     handleFileSelect(event) {
+        console.log('📁 File selection event triggered');
         const file = event.target.files[0];
         if (file) {
+            console.log('✅ File detected:', file.name);
             this.processSelectedFile(file);
+        } else {
+            console.log('❌ No file selected');
         }
     }
 
@@ -334,23 +339,29 @@ class NutritionAnalyzer {
     }
 
     processSelectedFile(file) {
+        console.log('📁 Processing selected file:', file.name, 'Size:', (file.size / 1024 / 1024).toFixed(2) + 'MB');
+        
         // Validate file size (max 10MB)
         const maxSize = 10 * 1024 * 1024;
         if (file.size > maxSize) {
+            console.error('❌ File too large:', file.size, 'bytes');
             this.showError('File size too large. Please select an image under 10MB.');
             return;
         }
 
         // Validate file type
         if (!file.type.startsWith('image/')) {
+            console.error('❌ Invalid file type:', file.type);
             this.showError('Please select a valid image file.');
             return;
         }
 
+        console.log('✅ File validation passed');
         this.selectedImage = file;
         this.displayPreview(file);
         this.enableAnalyzeButton();
         this.hideError();
+        console.log('✅ File processing complete');
     }
 
     displayPreview(file) {
@@ -439,29 +450,6 @@ class NutritionAnalyzer {
         if (this.selectedImage) {
             this.enableAnalyzeButton();
         }
-    }
-
-    processSelectedFile(file) {
-        console.log('📁 Processing selected file:', file.name);
-        
-        // Store the selected file
-        this.selectedImage = file;
-        
-        // Enable analyze button when file is selected
-        const analyzeBtn = document.getElementById('analyzeBtn');
-        if (analyzeBtn) {
-            analyzeBtn.disabled = false;
-            analyzeBtn.textContent = 'Analyze Nutrition';
-            console.log('✅ Analyze button enabled');
-        }
-        
-        // Show preview if possible
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            console.log('📷 Image preview loaded');
-            // You can add image preview here if needed
-        };
-        reader.readAsDataURL(file);
     }
 
     async analyzeImage() {
@@ -1148,7 +1136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.addEventListener('touchstart', function() {}, { passive: true });
             console.log('📱 Mobile device detected - adding touch optimizations');
         }
-        
+
         // Add global click logging for debugging
         document.addEventListener('click', function(e) {
             if (e.target.id === 'analyzeBtn' || e.target.id === 'captureBtn' || e.target.id === 'uploadArea' || e.target.closest('#uploadArea')) {
@@ -1162,16 +1150,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-        
+
         // Fix authentication buttons with enhanced handlers
         setTimeout(() => {
             console.log('🔐 Initializing authentication buttons...');
-            
+
             // Fix all login buttons
             document.querySelectorAll('[onclick*="showLogin"]').forEach(btn => {
                 const newBtn = btn.cloneNode(true);
                 btn.parentNode.replaceChild(newBtn, btn);
-                
+
                 newBtn.removeAttribute('onclick');
                 newBtn.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1184,12 +1172,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 console.log('✅ Login button fixed:', newBtn.textContent);
             });
-            
+
             // Fix all signup buttons
             document.querySelectorAll('[onclick*="showSignup"]').forEach(btn => {
                 const newBtn = btn.cloneNode(true);
                 btn.parentNode.replaceChild(newBtn, btn);
-                
+
                 newBtn.removeAttribute('onclick');
                 newBtn.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1202,13 +1190,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 console.log('✅ Signup button fixed:', newBtn.textContent);
             });
-            
+
             // Fix modal close buttons
             document.querySelectorAll('[onclick*="hide"]').forEach(btn => {
                 if (btn.textContent === '×') {
                     const newBtn = btn.cloneNode(true);
                     btn.parentNode.replaceChild(newBtn, btn);
-                    
+
                     newBtn.removeAttribute('onclick');
                     newBtn.addEventListener('click', function(e) {
                         e.preventDefault();
@@ -1219,7 +1207,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             });
-            
+
             console.log('🎉 Authentication buttons initialization complete!');
         }, 500);
 
@@ -1333,51 +1321,50 @@ document.addEventListener('DOMContentLoaded', () => {
         // Enhanced button initialization with comprehensive fixes
         setTimeout(() => {
             console.log('🔧 Starting comprehensive button initialization...');
-            
+
             const analyzeBtn = document.getElementById('analyzeBtn');
             const captureBtn = document.getElementById('captureBtn');
             const uploadArea = document.getElementById('uploadArea');
             const imageInput = document.getElementById('imageInput');
-            
+
             // Fix upload area with multiple event types
+            const uploadArea = document.getElementById('uploadArea');
+            const imageInput = document.getElementById('imageInput');
+            
             if (uploadArea && imageInput) {
                 console.log('📤 Initializing upload area with multiple event handlers');
                 
-                // Remove any existing listeners first
-                const newUploadArea = uploadArea.cloneNode(true);
-                uploadArea.parentNode.replaceChild(newUploadArea, uploadArea);
-                
-                // Add comprehensive click handlers
-                newUploadArea.addEventListener('click', function(e) {
+                // Add comprehensive click handlers (without cloning to prevent issues)
+                uploadArea.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('📤 Upload area clicked - opening file browser');
-                    document.getElementById('imageInput').click();
-                });
+                    console.log('📤 Fallback: Upload area clicked - opening file browser');
+                    imageInput.click();
+                }, true); // Use capture phase
                 
-                newUploadArea.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    console.log('📱 Upload area touched');
+                uploadArea.addEventListener('touchstart', function(e) {
+                    console.log('📱 Fallback: Upload area touched');
                     setTimeout(() => {
-                        document.getElementById('imageInput').click();
+                        imageInput.click();
                     }, 100);
-                });
+                }, { passive: false });
                 
-                // Make area more clickable
-                newUploadArea.style.cursor = 'pointer';
-                newUploadArea.setAttribute('role', 'button');
-                newUploadArea.setAttribute('tabindex', '0');
+                // Make area more accessible
+                uploadArea.style.cursor = 'pointer';
+                uploadArea.setAttribute('role', 'button');
+                uploadArea.setAttribute('tabindex', '0');
+                uploadArea.setAttribute('aria-label', 'Click to upload image');
                 
                 console.log('✅ Upload area enhanced initialization complete');
-            }
-            
-            // Fix file input with enhanced change handler
+            } else {
+                console.error('❌ Upload area or image input not found for fallback');
+            }            // Fix file input with enhanced change handler
             if (imageInput) {
                 const newImageInput = imageInput.cloneNode(true);
                 imageInput.parentNode.replaceChild(newImageInput, imageInput);
-                
+
                 newImageInput.addEventListener('change', function(e) {
-                    console.log('📁 File input changed:', e.target.files[0]?.name);
+                    console.log('📁 File input changed:', e.target.files[0] ? .name);
                     if (e.target.files[0] && window.nutritionAnalyzer) {
                         window.nutritionAnalyzer.processSelectedFile(e.target.files[0]);
                     } else {
@@ -1386,12 +1373,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 console.log('✅ File input enhanced initialization complete');
             }
-            
+
             // Fix analyze button with multiple handlers
             if (analyzeBtn) {
                 const newAnalyzeBtn = analyzeBtn.cloneNode(true);
                 analyzeBtn.parentNode.replaceChild(newAnalyzeBtn, analyzeBtn);
-                
+
                 newAnalyzeBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -1403,20 +1390,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert('Please select an image first');
                     }
                 });
-                
+
                 newAnalyzeBtn.addEventListener('touchstart', function(e) {
                     e.preventDefault();
                     console.log('📱 Analyze button touched');
                 });
-                
+
                 console.log('✅ Analyze button enhanced initialization complete');
             }
-            
+
             // Fix capture button with camera functionality
             if (captureBtn) {
                 const newCaptureBtn = captureBtn.cloneNode(true);
                 captureBtn.parentNode.replaceChild(newCaptureBtn, captureBtn);
-                
+
                 newCaptureBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -1427,10 +1414,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.error('❌ Analyzer unavailable');
                     }
                 });
-                
+
                 console.log('✅ Capture button enhanced initialization complete');
             }
-            
+
             console.log('🎉 All upload buttons initialization complete!');
         }, 300);
 

@@ -458,7 +458,7 @@
 
     <link rel="stylesheet" href="auth-styles.css">
     <script src="analytics.js"></script>
-    <script src="script.js?v=27"></script>
+    <script src="script.js?v=28"></script>
 
     <!-- Production Ready Notifications -->
     <script>
@@ -467,6 +467,24 @@
             if (window.location.hostname.includes('github.io')) {
                 console.log('🌟 Hill Calories AI - Live on GitHub Pages!');
                 console.log('🔗 Share URL:', window.location.href);
+                
+                // Add upload diagnostics
+                setTimeout(() => {
+                    const uploadArea = document.getElementById('uploadArea');
+                    const imageInput = document.getElementById('imageInput');
+                    console.log('🔍 Upload diagnostics:');
+                    console.log('  - Upload area found:', !!uploadArea);
+                    console.log('  - Image input found:', !!imageInput);
+                    console.log('  - NutritionAnalyzer available:', !!window.nutritionAnalyzer);
+                    
+                    if (uploadArea && imageInput) {
+                        console.log('✅ Both upload elements found - testing click');
+                        // Test if upload area is clickable
+                        uploadArea.addEventListener('click', () => {
+                            console.log('🎯 Upload area click test successful');
+                        });
+                    }
+                }, 2000);
 
                 // Add subtle deployment indicator
                 const indicator = document.createElement('div');
