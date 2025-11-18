@@ -566,13 +566,13 @@ class NutritionAnalyzer {
         const isGitHubPages = window.location.hostname.includes('github.io');
 
         const API_ENDPOINTS = [
-            'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook-test/Meal',
+            'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal',
             // Add backup endpoints here if available
         ];
 
         const selectedEndpoint = (isLocalhost || isGitHubPages) ?
             API_ENDPOINTS[0] :
-            '/webhook-test/Meal'; // Production proxy
+            '/webhook/Meal'; // Production proxy
 
         console.log('🌐 Analyzing meal with AI...');
         console.log('📡 Endpoint:', selectedEndpoint);
