@@ -2239,13 +2239,15 @@ body::before {
 
 /* 🎨 PROFESSIONAL MOBILE REDESIGN - ATTRACTIVE & USER-FRIENDLY */
 @media (max-width: 768px) {
-    /* Ensure header is visible on mobile */
+    /* Ensure header is visible on mobile with proper spacing */
     .header {
         display: block !important;
         visibility: visible !important;
         position: fixed !important;
         top: 0 !important;
         z-index: 1001 !important;
+        padding: 0.5rem 0; /* Add vertical padding to header */
+        min-height: 60px; /* Ensure consistent height */
     }
     
     /* Beautiful sky-blue gradient background */
@@ -2458,8 +2460,13 @@ body::before {
     
     /* Container and spacing optimization */
     .container {
-        padding: 0;
+        padding: 0 1rem; /* Restore horizontal padding for proper margins */
         max-width: 100%;
+    }
+    
+    /* Header container specific padding */
+    .header .container {
+        padding: 0 1.5rem; /* Better padding for header/navbar */
     }
     
     .hero-content {
@@ -2728,6 +2735,14 @@ body::before {
     
     .nav {
         justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0; /* Better vertical padding */
+        margin: 0; /* Ensure no unwanted margins */
+    }
+    
+    .logo h1 {
+        margin: 0; /* Remove default margins from logo */
+        font-size: 1.5rem; /* Appropriate size for mobile */
     }
     
     .mobile-sidebar {
@@ -2754,6 +2769,8 @@ body::before {
             #6ee7b7 50%,
             #34d399 75%,
             #10b981 100%) !important;
+        margin-top: 0; /* Remove any unwanted top margin */
+        padding-top: 80px; /* Account for fixed header height */
     }
 
     /* Dark green text on mint green background */
