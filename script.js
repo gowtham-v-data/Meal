@@ -441,6 +441,29 @@ class NutritionAnalyzer {
         }
     }
 
+    processSelectedFile(file) {
+        console.log('📁 Processing selected file:', file.name);
+        
+        // Store the selected file
+        this.selectedImage = file;
+        
+        // Enable analyze button when file is selected
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        if (analyzeBtn) {
+            analyzeBtn.disabled = false;
+            analyzeBtn.textContent = 'Analyze Nutrition';
+            console.log('✅ Analyze button enabled');
+        }
+        
+        // Show preview if possible
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            console.log('📷 Image preview loaded');
+            // You can add image preview here if needed
+        };
+        reader.readAsDataURL(file);
+    }
+
     async analyzeImage() {
         if (!this.selectedImage || this.isAnalyzing) {
             return;
@@ -1125,6 +1148,80 @@ document.addEventListener('DOMContentLoaded', () => {
             document.addEventListener('touchstart', function() {}, { passive: true });
             console.log('📱 Mobile device detected - adding touch optimizations');
         }
+        
+        // Add global click logging for debugging
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'analyzeBtn' || e.target.id === 'captureBtn' || e.target.id === 'uploadArea' || e.target.closest('#uploadArea')) {
+                console.log('🖱️ Global click detected on:', e.target.id, e.target.tagName, e.target.className);
+                console.log('🔍 Click target details:', {
+                    id: e.target.id,
+                    tagName: e.target.tagName,
+                    className: e.target.className,
+                    disabled: e.target.disabled,
+                    hasEventListeners: e.target.hasAttribute('data-initialized')
+                });
+            }
+        });
+        
+        // Fix authentication buttons with enhanced handlers
+        setTimeout(() => {
+            console.log('🔐 Initializing authentication buttons...');
+            
+            // Fix all login buttons
+            document.querySelectorAll('[onclick*="showLogin"]').forEach(btn => {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                
+                newBtn.removeAttribute('onclick');
+                newBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔑 Login button clicked');
+                    showLogin();
+                    if (typeof closeMobileMenu === 'function') {
+                        closeMobileMenu();
+                    }
+                });
+                console.log('✅ Login button fixed:', newBtn.textContent);
+            });
+            
+            // Fix all signup buttons
+            document.querySelectorAll('[onclick*="showSignup"]').forEach(btn => {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                
+                newBtn.removeAttribute('onclick');
+                newBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('📝 Signup button clicked');
+                    showSignup();
+                    if (typeof closeMobileMenu === 'function') {
+                        closeMobileMenu();
+                    }
+                });
+                console.log('✅ Signup button fixed:', newBtn.textContent);
+            });
+            
+            // Fix modal close buttons
+            document.querySelectorAll('[onclick*="hide"]').forEach(btn => {
+                if (btn.textContent === '×') {
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+                    
+                    newBtn.removeAttribute('onclick');
+                    newBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('❌ Close button clicked');
+                        hideLogin();
+                        hideSignup();
+                    });
+                }
+            });
+            
+            console.log('🎉 Authentication buttons initialization complete!');
+        }, 500);
 
         // Fix all authentication buttons with direct event listeners
         setTimeout(() => {
@@ -1233,35 +1330,109 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('🌐 Platform:', window.location.hostname);
         console.log('📡 Current timestamp:', new Date().toISOString());
 
-        // Additional button initialization fallback
+        // Enhanced button initialization with comprehensive fixes
         setTimeout(() => {
+            console.log('🔧 Starting comprehensive button initialization...');
+            
             const analyzeBtn = document.getElementById('analyzeBtn');
             const captureBtn = document.getElementById('captureBtn');
+            const uploadArea = document.getElementById('uploadArea');
+            const imageInput = document.getElementById('imageInput');
             
-            if (analyzeBtn && !analyzeBtn.hasAttribute('data-initialized')) {
-                analyzeBtn.setAttribute('data-initialized', 'true');
-                analyzeBtn.addEventListener('click', function(e) {
+            // Fix upload area with multiple event types
+            if (uploadArea && imageInput) {
+                console.log('📤 Initializing upload area with multiple event handlers');
+                
+                // Remove any existing listeners first
+                const newUploadArea = uploadArea.cloneNode(true);
+                uploadArea.parentNode.replaceChild(newUploadArea, uploadArea);
+                
+                // Add comprehensive click handlers
+                newUploadArea.addEventListener('click', function(e) {
                     e.preventDefault();
-                    console.log('🔥 Fallback: Analyze button clicked');
-                    if (window.nutritionAnalyzer) {
-                        window.nutritionAnalyzer.analyzeImage();
-                    }
+                    e.stopPropagation();
+                    console.log('📤 Upload area clicked - opening file browser');
+                    document.getElementById('imageInput').click();
                 });
-                console.log('✅ Analyze button fallback initialized');
+                
+                newUploadArea.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    console.log('📱 Upload area touched');
+                    setTimeout(() => {
+                        document.getElementById('imageInput').click();
+                    }, 100);
+                });
+                
+                // Make area more clickable
+                newUploadArea.style.cursor = 'pointer';
+                newUploadArea.setAttribute('role', 'button');
+                newUploadArea.setAttribute('tabindex', '0');
+                
+                console.log('✅ Upload area enhanced initialization complete');
             }
             
-            if (captureBtn && !captureBtn.hasAttribute('data-initialized')) {
-                captureBtn.setAttribute('data-initialized', 'true');
-                captureBtn.addEventListener('click', function(e) {
+            // Fix file input with enhanced change handler
+            if (imageInput) {
+                const newImageInput = imageInput.cloneNode(true);
+                imageInput.parentNode.replaceChild(newImageInput, imageInput);
+                
+                newImageInput.addEventListener('change', function(e) {
+                    console.log('📁 File input changed:', e.target.files[0]?.name);
+                    if (e.target.files[0] && window.nutritionAnalyzer) {
+                        window.nutritionAnalyzer.processSelectedFile(e.target.files[0]);
+                    } else {
+                        console.error('❌ No file selected or analyzer unavailable');
+                    }
+                });
+                console.log('✅ File input enhanced initialization complete');
+            }
+            
+            // Fix analyze button with multiple handlers
+            if (analyzeBtn) {
+                const newAnalyzeBtn = analyzeBtn.cloneNode(true);
+                analyzeBtn.parentNode.replaceChild(newAnalyzeBtn, analyzeBtn);
+                
+                newAnalyzeBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    console.log('📷 Fallback: Capture button clicked');
+                    e.stopPropagation();
+                    console.log('🔥 Analyze button clicked');
+                    if (window.nutritionAnalyzer && !this.disabled) {
+                        window.nutritionAnalyzer.analyzeImage();
+                    } else {
+                        console.error('❌ Analyzer unavailable or button disabled');
+                        alert('Please select an image first');
+                    }
+                });
+                
+                newAnalyzeBtn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    console.log('📱 Analyze button touched');
+                });
+                
+                console.log('✅ Analyze button enhanced initialization complete');
+            }
+            
+            // Fix capture button with camera functionality
+            if (captureBtn) {
+                const newCaptureBtn = captureBtn.cloneNode(true);
+                captureBtn.parentNode.replaceChild(newCaptureBtn, captureBtn);
+                
+                newCaptureBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('📷 Capture button clicked');
                     if (window.nutritionAnalyzer) {
                         window.nutritionAnalyzer.capturePhoto();
+                    } else {
+                        console.error('❌ Analyzer unavailable');
                     }
                 });
-                console.log('✅ Capture button fallback initialized');
+                
+                console.log('✅ Capture button enhanced initialization complete');
             }
-        }, 500);
+            
+            console.log('🎉 All upload buttons initialization complete!');
+        }, 300);
 
     } catch (error) {
         errorTracker.log(error, 'Application initialization');
@@ -1451,3 +1622,14 @@ function showNotification(message, type = 'info') {
         }
     }, 5000);
 }
+
+// Ensure critical functions are globally accessible
+window.showLogin = showLogin;
+window.hideLogin = hideLogin;
+window.showSignup = showSignup;
+window.hideSignup = hideSignup;
+window.switchToLogin = switchToLogin;
+window.switchToSignup = switchToSignup;
+window.handleLogin = handleLogin;
+window.handleSignup = handleSignup;
+window.closeMobileMenu = closeMobileMenu;
