@@ -256,10 +256,10 @@ class NutritionAnalyzer {
         // File input change
         this.imageInput.addEventListener('change', (e) => this.handleFileSelect(e));
 
-        // Upload area click
+        // Upload area click - always open file browser
         this.uploadArea.addEventListener('click', () => {
             if (!this.selectedImage) {
-                this.imageInput.click();
+                this.imageInput.click(); // Open file browser on all devices
             }
         });
 

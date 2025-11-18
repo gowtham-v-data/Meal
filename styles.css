@@ -1961,23 +1961,31 @@ body::before {
 /* Mobile-specific styling for better text visibility */
 @media (max-width: 768px) {
     .brand-gradient {
-        /* Fallback solid color for better mobile visibility */
+        /* Green gradient for mobile - as requested */
         background: linear-gradient(135deg, 
-            #4f46e5 0%, 
-            #7c3aed 25%, 
-            #9333ea 50%, 
-            #059669 75%, 
-            #047857 100%);
+            #10b981 0%, 
+            #059669 25%, 
+            #047857 50%, 
+            #065f46 75%, 
+            #064e3b 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         /* Stronger colors for mobile screens */
-        filter: brightness(1.2) contrast(1.1);
+        filter: brightness(1.3) contrast(1.2);
+        font-weight: 900; /* Bolder text for better visibility */
     }
     
     .brand-title {
-        font-size: 3rem; /* Slightly smaller on mobile */
-        text-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add subtle shadow for better readability */
+        font-size: 2.8rem; /* Optimized mobile size */
+        text-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); /* Green shadow for better readability */
+        margin-bottom: 1rem;
+    }
+    
+    .brand-subtitle {
+        font-size: 1.1rem;
+        color: #059669; /* Green subtitle on mobile */
+        font-weight: 600;
     }
 }
 
