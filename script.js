@@ -422,7 +422,9 @@ class NutritionAnalyzer {
         // Webhook endpoint for meal analysis - /Meal is the critical endpoint
         const API_ENDPOINT = window.location.hostname === 'localhost' 
             ? 'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal'
-            : '/webhook/Meal'; // Use relative path in production for proxy
+            : window.location.hostname.includes('github.io')
+                ? 'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal' // GitHub Pages - direct API call
+                : '/webhook/Meal'; // Other platforms use proxy
         
         console.log('Sending request to CRITICAL /Meal endpoint:', API_ENDPOINT);
         console.log('FormData contents:', Array.from(formData.entries()));
@@ -434,7 +436,8 @@ class NutritionAnalyzer {
                 body: formData,
                 headers: {
                     'Accept': 'application/json',
-                }
+                },
+                mode: 'cors' // Enable CORS for cross-origin requests
             });
 
             console.log('Response status:', response.status);
@@ -500,7 +503,14 @@ class NutritionAnalyzer {
                 throw new Error('Response format not recognized');
             }
         } catch (fetchError) {
-            console.error('Fetch error:', fetchError);
+            console.error('🔥 Fetch error:', fetchError);
+            
+            // Check if it's a CORS or networking issue on GitHub Pages
+            if (window.location.hostname.includes('github.io')) {
+                console.warn('⚠️ GitHub Pages detected - API calls may require direct endpoint');
+                console.log('💡 Ensure your API endpoint supports CORS for:', window.location.origin);
+            }
+            
             throw fetchError;
         }
     }
@@ -765,6 +775,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         console.log('Hill Calories AI initialized successfully');
+        console.log('Platform:', window.location.hostname);
+        console.log('API Endpoint:', API_ENDPOINT);
         
     } catch (error) {
         errorTracker.log(error, 'Application initialization');
