@@ -2292,7 +2292,9 @@ body::before {
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         margin-bottom: 0.5rem;
         letter-spacing: -0.02em;
-        color: white;
+        color: #2563eb !important; /* Blue color for mobile visibility */
+        -webkit-text-fill-color: #2563eb !important;
+        font-weight: 800;
     }
     
     .brand-subtitle {
@@ -2523,6 +2525,35 @@ body::before {
     }
 }
 
+/* Desktop close button visibility */
+@media (min-width: 769px) {
+    .welcome-actions .btn-close {
+        background: rgba(220, 38, 38, 0.8) !important;
+        color: white !important;
+        padding: 10px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        font-size: 18px !important;
+        border-radius: 50% !important;
+        border: 2px solid rgba(255, 255, 255, 0.6) !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        z-index: 10000 !important;
+        box-shadow: 0 3px 10px rgba(220, 38, 38, 0.3) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .welcome-actions .btn-close:hover {
+        background: rgba(220, 38, 38, 1) !important;
+        transform: scale(1.05) !important;
+        border-color: rgba(255, 255, 255, 0.9) !important;
+        box-shadow: 0 4px 14px rgba(220, 38, 38, 0.5) !important;
+    }
+}
+
 /* CRITICAL MOBILE BUTTON FIXES - MUST BE LAST */
 @media (max-width: 768px) {
     /* Force proper touch handling for ALL buttons */
@@ -2572,14 +2603,33 @@ body::before {
     }
 
     .welcome-actions .btn-close {
-        background: rgba(255, 255, 255, 0.2) !important;
+        background: rgba(220, 38, 38, 0.9) !important; /* Red background for visibility */
         color: white !important;
         padding: 12px !important;
         min-width: 44px !important;
         min-height: 44px !important;
-        font-size: 18px !important;
+        font-size: 20px !important;
         line-height: 1 !important;
         border-radius: 50% !important;
+        border: 2px solid rgba(255, 255, 255, 0.8) !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        position: relative !important;
+        z-index: 10000 !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .welcome-actions .btn-close:hover,
+    .welcome-actions .btn-close:active,
+    .welcome-actions .btn-close:focus {
+        background: rgba(220, 38, 38, 1) !important;
+        transform: scale(1.1) !important;
+        border-color: rgba(255, 255, 255, 1) !important;
+        box-shadow: 0 6px 16px rgba(220, 38, 38, 0.6) !important;
     }
 
     /* Auth buttons in header */

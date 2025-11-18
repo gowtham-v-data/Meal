@@ -610,7 +610,7 @@ class NutritionAnalyzer {
 
         console.log('🌐 Analyzing meal with AI...');
         console.log('📡 Endpoint:', selectedEndpoint);
-        console.log('🖼️ Image size:', formData.get('image') ? .size || 'unknown');
+        console.log('🖼️ Image size:', formData.get('image')?.size || 'unknown');
 
         // Test endpoint availability first
         if (selectedEndpoint.includes('ngrok')) {
@@ -1108,7 +1108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loginBtn) {
                 // Remove existing onclick to prevent conflicts
                 loginBtn.removeAttribute('onclick');
-                
+
                 loginBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -1124,23 +1124,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('❌ Login button not found');
             }
 
-            // Close button in welcome notification  
+            // Close button in welcome notification - KEEP onclick as fallback
             const closeBtn = document.querySelector('.welcome-actions .btn-close');
             if (closeBtn) {
-                // Remove existing onclick to prevent conflicts
-                closeBtn.removeAttribute('onclick');
-                
+                // DON'T remove onclick - keep it as fallback
+                // Just add additional event handlers
+
                 closeBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
+                    console.log('🔴 Close button clicked via event listener');
+                    hideWelcome();
+                }, true); // Use capture phase
+
+                closeBtn.addEventListener('touchstart', function(e) {
+                    console.log('🔴 Close button touched via event listener');
+                    hideWelcome();
+                }, { passive: true });
+
+                // Add mousedown for immediate response
+                closeBtn.addEventListener('mousedown', function(e) {
+                    console.log('🔴 Close button mousedown');
                     hideWelcome();
                 });
-                closeBtn.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    hideWelcome();
-                }, { passive: false });
-                console.log('✅ Close button events attached');
+
+                console.log('✅ Close button events attached (keeping onclick fallback)');
             } else {
                 console.log('❌ Close button not found');
             }
@@ -1165,7 +1171,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Fix auth buttons in header
             const headerLoginBtn = document.querySelector('.auth-buttons .btn-login');
             const headerSignupBtn = document.querySelector('.auth-buttons .btn-signup');
-            
+
             if (headerLoginBtn) {
                 headerLoginBtn.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1178,7 +1184,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showLogin();
                 }, { passive: false });
             }
-            
+
             if (headerSignupBtn) {
                 headerSignupBtn.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1277,10 +1283,19 @@ function switchToLogin() {
 
 function hideWelcome() {
     try {
+        console.log('🔴 hideWelcome() called');
         const notification = document.getElementById('welcomeNotification');
         if (notification) {
             notification.style.display = 'none';
-            console.log('✅ Welcome notification closed');
+            // Also try removing the element completely as fallback
+            setTimeout(() => {
+                if (notification && notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 100);
+            console.log('✅ Welcome notification closed and will be removed');
+        } else {
+            console.log('❌ Welcome notification element not found');
         }
     } catch (error) {
         console.error('❌ Error hiding welcome notification:', error);
