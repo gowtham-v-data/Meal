@@ -610,7 +610,7 @@ class NutritionAnalyzer {
 
         console.log('🌐 Analyzing meal with AI...');
         console.log('📡 Endpoint:', selectedEndpoint);
-        console.log('🖼️ Image size:', formData.get('image')?.size || 'unknown');
+        console.log('🖼️ Image size:', formData.get('image') ? .size || 'unknown');
 
         // Test endpoint availability first
         if (selectedEndpoint.includes('ngrok')) {
@@ -1094,13 +1094,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Mobile-specific initialization and button fixes
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
+
         if (isMobile) {
             // Add mobile-specific touch event handling
             document.addEventListener('touchstart', function() {}, { passive: true });
             console.log('📱 Mobile device detected - adding touch optimizations');
         }
-        
+
         // Fix all authentication buttons with direct event listeners
         setTimeout(() => {
             // Login button in welcome notification
@@ -1113,7 +1113,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 console.log('✅ Login button events attached');
             }
-            
+
             // Close button in welcome notification  
             const closeBtn = document.querySelector('.welcome-actions .btn-close');
             if (closeBtn) {
@@ -1124,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 console.log('✅ Close button events attached');
             }
-            
+
             // Modal close buttons
             const modalCloseButtons = document.querySelectorAll('.modal-close');
             modalCloseButtons.forEach(btn => {
@@ -1138,7 +1138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (this.closest('#signupModal')) hideSignup();
                 });
             });
-            
+
             console.log('✅ All authentication buttons initialized for mobile');
         }, 100);
 
