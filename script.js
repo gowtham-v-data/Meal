@@ -420,15 +420,21 @@ class NutritionAnalyzer {
 
     async makeNutritionRequest(formData) {
         // Webhook endpoint for meal analysis - /Meal is the critical endpoint
-        const API_ENDPOINT = window.location.hostname === 'localhost' 
-            ? 'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal'
-            : window.location.hostname.includes('github.io')
-                ? 'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal' // GitHub Pages - direct API call
-                : '/webhook/Meal'; // Other platforms use proxy
+        const isLocalhost = window.location.hostname === 'localhost' || 
+                           window.location.hostname === '127.0.0.1' ||
+                           window.location.port === '8000';
+        const isGitHubPages = window.location.hostname.includes('github.io');
         
-        console.log('Sending request to CRITICAL /Meal endpoint:', API_ENDPOINT);
-        console.log('FormData contents:', Array.from(formData.entries()));
-        console.log('Note: /webhook/Meal endpoint is essential for nutrition analysis');
+        const API_ENDPOINT = (isLocalhost || isGitHubPages)
+            ? 'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal'
+            : '/webhook/Meal'; // Other platforms use proxy
+        
+        console.log('🌐 Current location:', window.location.href);
+        console.log('🔍 Is localhost?:', isLocalhost);
+        console.log('🔍 Is GitHub Pages?:', isGitHubPages);
+        console.log('🎯 Selected API_ENDPOINT:', API_ENDPOINT);
+        console.log('📋 FormData contents:', Array.from(formData.entries()));
+        console.log('⚠️ Note: /webhook/Meal endpoint is essential for nutrition analysis');
         
         try {
             const response = await fetch(API_ENDPOINT, {
