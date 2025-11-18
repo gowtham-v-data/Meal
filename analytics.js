@@ -29,7 +29,7 @@ class HillCaloriesAnalytics {
         document.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
                 this.trackEvent('button_click', {
-                    buttonText: e.target.textContent ? .substring(0, 50),
+                    buttonText: e.target.textContent?.substring(0, 50) || 'unknown',
                     buttonId: e.target.id || 'unknown'
                 });
             }

@@ -28,8 +28,8 @@ class NutritionAnalyzer {
         this.caloriesValue = document.getElementById('caloriesValue');
 
         // Button text elements
-        this.btnText = this.analyzeBtn.querySelector('.btn-text');
-        this.btnLoading = this.analyzeBtn.querySelector('.btn-loading');
+        this.btnText = this.analyzeBtn ? this.analyzeBtn.querySelector('.btn-text') : null;
+        this.btnLoading = this.analyzeBtn ? this.analyzeBtn.querySelector('.btn-loading') : null;
 
         this.selectedImage = null;
         this.cameraModal = null;
@@ -1185,15 +1185,31 @@ function hideLogin() {
 }
 
 function showSignup() {
-    const modal = document.getElementById('signupModal');
-    modal.classList.add('show');
-    document.body.style.overflow = 'hidden';
+    try {
+        const modal = document.getElementById('signupModal');
+        if (modal) {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            console.log('✅ Signup modal opened');
+        } else {
+            console.error('❌ Signup modal not found');
+        }
+    } catch (error) {
+        console.error('❌ Error showing signup modal:', error);
+    }
 }
 
 function hideSignup() {
-    const modal = document.getElementById('signupModal');
-    modal.classList.remove('show');
-    document.body.style.overflow = 'auto';
+    try {
+        const modal = document.getElementById('signupModal');
+        if (modal) {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            console.log('✅ Signup modal closed');
+        }
+    } catch (error) {
+        console.error('❌ Error hiding signup modal:', error);
+    }
 }
 
 function switchToSignup() {
