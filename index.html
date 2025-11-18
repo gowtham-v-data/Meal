@@ -45,11 +45,10 @@
         <div class="container">
             <nav class="nav">
                 <div class="logo">
-                    <h1>🏔️ Hill Calories AI</h1>
+                    <h1><span class="logo-hill">Hill</span> <span class="logo-calories">Calories</span></h1>
                 </div>
                 <div class="nav-links">
-                    <a href="#features">Features</a>
-                    <a href="#how-it-works">How it Works</a>
+                    <!-- Clean design - minimal navigation -->
                 </div>
             </nav>
         </div>
@@ -60,27 +59,48 @@
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <h2 class="hero-title">Advanced AI-Powered Nutritional Assessment Platform</h2>
-                    <p class="hero-subtitle">Transform your meal photography into comprehensive nutritional insights with enterprise-grade artificial intelligence technology delivering precise macronutrient analysis and caloric assessment within seconds.</p>
+                    <div class="brand-header">
+                        <h1 class="brand-title"><span class="brand-hill">Hill</span> <span class="brand-calories">Calories</span></h1>
+                        <h2 class="brand-subtitle">Smart Meal Analysis</h2>
+                    </div>
+                    <p class="hero-description">Instant macronutrient breakdown from a single photo.</p>
+                    <p class="hero-tagline">Track protein, carbs, and fats with AI precision.</p>
 
-                    <!-- Image Upload Section -->
-                    <div class="upload-section">
-                        <div class="upload-area" id="uploadArea">
-                            <div class="upload-placeholder">
-                                <div class="upload-icon">📸</div>
-                                <h3>Deploy Advanced Nutritional Analysis</h3>
-                                <p>Secure image upload via drag-and-drop or direct file selection</p>
-                                <input type="file" id="imageInput" accept="image/*" capture="environment">
+                    <!-- Upload Section -->
+                    <div class="upload-container">
+                        <div class="upload-card">
+                            <div class="upload-area" id="uploadArea">
+                                <div class="upload-placeholder">
+                                    <div class="camera-icon">
+                                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+                                            <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8C1 7.46957 1.21071 6.96086 1.58579 6.58579C1.96086 6.21071 2.46957 6 3 6H7L9 4H15L17 6H21C21.5304 6 22.0391 6.21071 22.4142 6.58579C22.7893 6.96086 23 7.46957 23 8V19Z" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <circle cx="12" cy="13" r="4" stroke="#22C55E" stroke-width="2"/>
+                                        </svg>
+                                    </div>
+                                    <h3>Upload Your Meal</h3>
+                                    <p>Take a photo or upload an image • PNG, JPG up to 10MB</p>
+                                    <input type="file" id="imageInput" accept="image/*" capture="environment" style="display: none;">
+                                </div>
+                                <img id="previewImage" class="preview-image" style="display: none;" alt="Meal preview">
                             </div>
-                            <img id="previewImage" class="preview-image" style="display: none;" alt="Meal preview">
-                        </div>
-
-                        <div class="upload-actions">
-                            <button class="btn btn-primary" id="analyzeBtn" disabled>
-                                <span class="btn-text">Execute AI Analysis</span>
-                                <span class="btn-loading" style="display: none;">Processing...</span>
-                            </button>
-                            <button class="btn btn-secondary" id="captureBtn">📷 Capture Image</button>
+                            
+                            <div class="upload-buttons">
+                                <button class="btn-take-photo" id="captureBtn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                        <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8C1 7.46957 1.21071 6.96086 1.58579 6.58579C1.96086 6.21071 2.46957 6 3 6H7L9 4H15L17 6H21C21.5304 6 22.0391 6.21071 22.4142 6.58579C22.7893 6.96086 23 7.46957 23 8V19Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="12" cy="13" r="4" stroke="white" stroke-width="2"/>
+                                    </svg>
+                                    Take Photo
+                                </button>
+                                <button class="btn-upload-image" onclick="document.getElementById('imageInput').click()">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <polyline points="7,10 12,15 17,10" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="12" y1="15" x2="12" y2="3" stroke="#6B7280" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                    Upload Image
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -128,58 +148,12 @@
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section class="features" id="features">
-            <div class="container">
-                <h2 class="section-title">Enterprise-Grade Nutritional Intelligence Platform</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <h3>Real-Time Analytics</h3>
-                        <p>Deliver comprehensive nutritional assessments within 3 seconds utilizing state-of-the-art machine learning algorithms and neural network processing.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📱</div>
-                        <h3>Cross-Platform Excellence</h3>
-                        <p>Seamlessly integrated mobile-first architecture with advanced responsive design and professional-grade camera functionality for enterprise mobility.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🎯</div>
-                        <h3>Precision Analytics</h3>
-                        <p>Laboratory-grade macronutrient quantification with comprehensive protein, carbohydrate, lipid, and caloric energy assessment protocols.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- How it Works Section -->
-        <section class="how-it-works" id="how-it-works">
-            <div class="container">
-                <h2 class="section-title">Advanced Processing Methodology</h2>
-                <div class="steps-grid">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <h3>Image Acquisition Protocol</h3>
-                        <p>Deploy secure digital imaging through integrated camera systems or enterprise-grade file upload infrastructure with advanced image processing capabilities.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <h3>Neural Network Processing</h3>
-                        <p>Execute sophisticated computer vision algorithms and deep learning models to perform comprehensive food identification and nutritional composition analysis.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <h3>Comprehensive Reporting</h3>
-                        <p>Generate detailed analytical reports featuring precision macronutrient quantification, caloric density assessment, and comprehensive nutritional profiling data.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Features and How it Works sections hidden for clean design -->
     </main>
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Hill Calories AI. Enterprise-Grade Nutritional Intelligence Solutions.</p>
+            <p>&copy; 2024 Hill Calories. Smart nutrition analysis powered by AI.</p>
         </div>
     </footer>
 
