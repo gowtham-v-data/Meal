@@ -664,7 +664,8 @@ class NutritionAnalyzer {
 
         console.log('🌐 Analyzing meal with AI...');
         console.log('📡 Endpoint:', selectedEndpoint);
-        console.log('🖼️ Image size:', formData.get('image') ? .size || 'unknown');
+        const imageFile = formData.get('image');
+        console.log('🖼️ Image size:', imageFile && imageFile.size ? imageFile.size : 'unknown');
 
         // Test endpoint availability first
         if (selectedEndpoint.includes('ngrok')) {
@@ -1346,9 +1347,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const imageInput = document.getElementById('imageInput');
 
             // Fix upload area with multiple event types
-            const uploadArea = document.getElementById('uploadArea');
-            const imageInput = document.getElementById('imageInput');
-            
             if (uploadArea && imageInput) {
                 console.log('📤 Initializing upload area with multiple event handlers');
                 
@@ -1360,6 +1358,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('📍 Fallback click target:', e.target.tagName, e.target.className);
                     imageInput.click();
                 }, true); // Use capture phase
+                
+                uploadArea.addEventListener('touchstart', function(e) {
+                    console.log('📱 Fallback: Upload area touched');
+                    setTimeout(() => {
+                        imageInput.click();
+                    }, 100);
+                }, { passive: false });
                 
                 // Specific camera icon fallback handler
                 const cameraIcon = uploadArea.querySelector('.camera-icon');
@@ -1383,13 +1388,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, true);
                 }
                 
-                uploadArea.addEventListener('touchstart', function(e) {
-                    console.log('📱 Fallback: Upload area touched');
-                    setTimeout(() => {
-                        imageInput.click();
-                    }, 100);
-                }, { passive: false });
-                
                 // Make area more accessible
                 uploadArea.style.cursor = 'pointer';
                 uploadArea.setAttribute('role', 'button');
@@ -1405,7 +1403,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 imageInput.parentNode.replaceChild(newImageInput, imageInput);
 
                 newImageInput.addEventListener('change', function(e) {
-                    console.log('📁 File input changed:', e.target.files[0] ? .name);
+                    const selectedFile = e.target.files[0];
+                    console.log('📁 File input changed:', selectedFile ? selectedFile.name : 'no file');
                     if (e.target.files[0] && window.nutritionAnalyzer) {
                         window.nutritionAnalyzer.processSelectedFile(e.target.files[0]);
                     } else {
