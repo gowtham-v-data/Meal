@@ -254,26 +254,51 @@ class NutritionAnalyzer {
 
     bindEvents() {
         // File input change
-        this.imageInput.addEventListener('change', (e) => this.handleFileSelect(e));
+        if (this.imageInput) {
+            this.imageInput.addEventListener('change', (e) => this.handleFileSelect(e));
+        }
 
         // Upload area click - always open file browser
-        this.uploadArea.addEventListener('click', () => {
-            if (!this.selectedImage) {
-                this.imageInput.click(); // Open file browser on all devices
-            }
-        });
+        if (this.uploadArea) {
+            this.uploadArea.addEventListener('click', () => {
+                if (!this.selectedImage && this.imageInput) {
+                    this.imageInput.click(); // Open file browser on all devices
+                }
+            });
 
-        // Drag and drop events
-        this.uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
-        this.uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
-        this.uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
+            // Drag and drop events
+            this.uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
+            this.uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
+            this.uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
+        }
 
-        // Button events
-        this.analyzeBtn.addEventListener('click', () => this.analyzeImage());
-        this.captureBtn.addEventListener('click', () => this.capturePhoto());
+        // Button events with error handling
+        if (this.analyzeBtn) {
+            this.analyzeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('🔥 Analyze button clicked');
+                this.analyzeImage();
+            });
+        } else {
+            console.error('❌ Analyze button not found');
+        }
+
+        if (this.captureBtn) {
+            this.captureBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('📷 Capture button clicked');
+                this.capturePhoto();
+            });
+        } else {
+            console.error('❌ Capture button not found');
+        }
 
         // Preview image click to change
-        this.previewImage.addEventListener('click', () => this.imageInput.click());
+        if (this.previewImage) {
+            this.previewImage.addEventListener('click', () => {
+                if (this.imageInput) this.imageInput.click();
+            });
+        }
     }
 
     handleFileSelect(event) {
@@ -1207,6 +1232,36 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('🚀 Hill Calories AI initialized successfully - Version 2.0');
         console.log('🌐 Platform:', window.location.hostname);
         console.log('📡 Current timestamp:', new Date().toISOString());
+
+        // Additional button initialization fallback
+        setTimeout(() => {
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const captureBtn = document.getElementById('captureBtn');
+            
+            if (analyzeBtn && !analyzeBtn.hasAttribute('data-initialized')) {
+                analyzeBtn.setAttribute('data-initialized', 'true');
+                analyzeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('🔥 Fallback: Analyze button clicked');
+                    if (window.nutritionAnalyzer) {
+                        window.nutritionAnalyzer.analyzeImage();
+                    }
+                });
+                console.log('✅ Analyze button fallback initialized');
+            }
+            
+            if (captureBtn && !captureBtn.hasAttribute('data-initialized')) {
+                captureBtn.setAttribute('data-initialized', 'true');
+                captureBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('📷 Fallback: Capture button clicked');
+                    if (window.nutritionAnalyzer) {
+                        window.nutritionAnalyzer.capturePhoto();
+                    }
+                });
+                console.log('✅ Capture button fallback initialized');
+            }
+        }, 500);
 
     } catch (error) {
         errorTracker.log(error, 'Application initialization');
