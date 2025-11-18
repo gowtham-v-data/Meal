@@ -1255,11 +1255,18 @@ function handleSignup(event) {
 
 function updateAuthState(isLoggedIn, userEmail = '') {
     const authButtons = document.querySelector('.auth-buttons');
-    if (isLoggedIn) {
-        authButtons.innerHTML = `
-            <span class="user-info">${userEmail.split('@')[0]}</span>
-            <button class="btn-logout" onclick="handleLogout()">Logout</button>
-        `;
+    if (authButtons) {
+        if (isLoggedIn) {
+            authButtons.innerHTML = `
+                <span class="user-info">${userEmail.split('@')[0]}</span>
+                <button class="btn-logout" onclick="handleLogout()">Logout</button>
+            `;
+        } else {
+            authButtons.innerHTML = `
+                <button class="btn-login" onclick="showLogin()">Login</button>
+                <button class="btn-signup" onclick="showSignup()">Sign Up</button>
+            `;
+        }
     }
 }
 

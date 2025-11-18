@@ -394,4 +394,37 @@
         width: 100%;
         max-width: 250px;
     }
+    
+    /* Mobile navigation auth buttons */
+    .auth-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .btn-login, .btn-signup, .btn-logout {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        touch-action: manipulation;
+        min-height: 40px;
+    }
+    
+    .btn-login, .btn-signup {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+    }
+    
+    .btn-logout {
+        background: rgba(239, 68, 68, 0.9);
+        color: white;
+    }
+    
+    .user-info {
+        color: #059669;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
 }

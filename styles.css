@@ -662,6 +662,17 @@ body::before {
     font-weight: 700;
 }
 
+/* Blue styling for calories card */
+.calories-card.calories-blue {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #1e40af 100%);
+    color: white;
+    box-shadow: 0 15px 45px rgba(37, 99, 235, 0.3);
+}
+
+.calories-card.calories-blue:hover {
+    box-shadow: 0 20px 60px rgba(37, 99, 235, 0.4);
+}
+
 /* Food Items Display */
 .food-items-container {
     margin-bottom: var(--spacing-8);
@@ -2485,5 +2496,24 @@ body::before {
     
     .nutrition-card.fat {
         border-left: 4px solid #8b5cf6;
+    }
+    
+    /* Mobile calories card styling */
+    .calories-card.calories-blue {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #1e40af 100%);
+        color: white;
+        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    }
+    
+    .calories-card.calories-blue:hover {
+        box-shadow: 0 15px 35px rgba(37, 99, 235, 0.4);
+    }
+    
+    /* Section title consistency */
+    .section-title {
+        font-size: 1.8rem !important;
+        line-height: 1.3 !important;
+        text-align: center;
+        margin-bottom: 2rem;
     }
 }
