@@ -1103,43 +1103,96 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Fix all authentication buttons with direct event listeners
         setTimeout(() => {
-            // Login button in welcome notification
-            const loginBtn = document.querySelector('.welcome-actions .btn-primary');
+            // Login button in welcome notification (correct selector)
+            const loginBtn = document.querySelector('.welcome-actions .btn.btn-primary');
             if (loginBtn) {
-                loginBtn.addEventListener('click', showLogin);
-                loginBtn.addEventListener('touchend', function(e) {
+                // Remove existing onclick to prevent conflicts
+                loginBtn.removeAttribute('onclick');
+                
+                loginBtn.addEventListener('click', function(e) {
                     e.preventDefault();
+                    e.stopPropagation();
                     showLogin();
                 });
+                loginBtn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showLogin();
+                }, { passive: false });
                 console.log('✅ Login button events attached');
+            } else {
+                console.log('❌ Login button not found');
             }
 
             // Close button in welcome notification  
             const closeBtn = document.querySelector('.welcome-actions .btn-close');
             if (closeBtn) {
-                closeBtn.addEventListener('click', hideWelcome);
-                closeBtn.addEventListener('touchend', function(e) {
+                // Remove existing onclick to prevent conflicts
+                closeBtn.removeAttribute('onclick');
+                
+                closeBtn.addEventListener('click', function(e) {
                     e.preventDefault();
+                    e.stopPropagation();
                     hideWelcome();
                 });
+                closeBtn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    hideWelcome();
+                }, { passive: false });
                 console.log('✅ Close button events attached');
+            } else {
+                console.log('❌ Close button not found');
             }
 
             // Modal close buttons
             const modalCloseButtons = document.querySelectorAll('.modal-close');
             modalCloseButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    if (this.closest('#loginModal')) hideLogin();
-                    if (this.closest('#signupModal')) hideSignup();
-                });
-                btn.addEventListener('touchend', function(e) {
+                btn.addEventListener('click', function(e) {
                     e.preventDefault();
+                    e.stopPropagation();
                     if (this.closest('#loginModal')) hideLogin();
                     if (this.closest('#signupModal')) hideSignup();
                 });
+                btn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (this.closest('#loginModal')) hideLogin();
+                    if (this.closest('#signupModal')) hideSignup();
+                }, { passive: false });
             });
 
-            console.log('✅ All authentication buttons initialized for mobile');
+            // Fix auth buttons in header
+            const headerLoginBtn = document.querySelector('.auth-buttons .btn-login');
+            const headerSignupBtn = document.querySelector('.auth-buttons .btn-signup');
+            
+            if (headerLoginBtn) {
+                headerLoginBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showLogin();
+                });
+                headerLoginBtn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showLogin();
+                }, { passive: false });
+            }
+            
+            if (headerSignupBtn) {
+                headerSignupBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showSignup();
+                });
+                headerSignupBtn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showSignup();
+                }, { passive: false });
+            }
+
+            console.log('✅ All authentication buttons initialized for mobile with proper event handling');
         }, 100);
 
         console.log('🚀 Hill Calories AI initialized successfully - Version 2.0');
