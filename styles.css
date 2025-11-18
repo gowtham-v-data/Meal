@@ -1958,6 +1958,29 @@ body::before {
     animation: gradientShift 4s ease-in-out infinite;
 }
 
+/* Mobile-specific styling for better text visibility */
+@media (max-width: 768px) {
+    .brand-gradient {
+        /* Fallback solid color for better mobile visibility */
+        background: linear-gradient(135deg, 
+            #4f46e5 0%, 
+            #7c3aed 25%, 
+            #9333ea 50%, 
+            #059669 75%, 
+            #047857 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        /* Stronger colors for mobile screens */
+        filter: brightness(1.2) contrast(1.1);
+    }
+    
+    .brand-title {
+        font-size: 3rem; /* Slightly smaller on mobile */
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add subtle shadow for better readability */
+    }
+}
+
 @keyframes gradientShift {
     0%, 100% {
         background-position: 0% 50%;

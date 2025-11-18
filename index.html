@@ -33,8 +33,10 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🏔️%3C/text%3E%3C/svg%3E">
 
-    <script>window.pageLoadStart = Date.now();</script>
-    
+    <script>
+        window.pageLoadStart = Date.now();
+    </script>
+
     <!-- Performance Monitoring -->
     <script>
         // Simple performance tracking from actual navigation start
@@ -51,7 +53,7 @@
                 loadTime = Date.now() - window.pageLoadStart;
             }
             console.log('🚀 App loaded in', Math.round(loadTime), 'ms');
-            
+
             // Track user engagement
             let userActive = true;
             let analyticsData = {
@@ -60,7 +62,7 @@
                 userAgent: navigator.userAgent.substring(0, 100),
                 url: window.location.href
             };
-            
+
             // Log deployment success
             console.log('📊 Hill Calories Analytics:', analyticsData);
         });
@@ -115,7 +117,7 @@
                                     </div>
                                     <h3>Upload Your Meal Photo</h3>
                                     <p>Drop an image here, or click to browse • PNG, JPG up to 10MB</p>
-                                    <input type="file" id="imageInput" accept="image/*" capture="environment" style="display: none;">
+                                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
                                 </div>
                                 <img id="previewImage" class="preview-image" style="display: none;" alt="Meal preview">
                             </div>
@@ -349,8 +351,8 @@
 
     <link rel="stylesheet" href="auth-styles.css">
     <script src="analytics.js"></script>
-    <script src="script.js?v=9"></script>
-    
+    <script src="script.js?v=10"></script>
+
     <!-- Production Ready Notifications -->
     <script>
         // Show deployment success banner
@@ -358,7 +360,7 @@
             if (window.location.hostname.includes('github.io')) {
                 console.log('🌟 Hill Calories AI - Live on GitHub Pages!');
                 console.log('🔗 Share URL:', window.location.href);
-                
+
                 // Add subtle deployment indicator
                 const indicator = document.createElement('div');
                 indicator.style.cssText = `
@@ -371,7 +373,7 @@
                 `;
                 indicator.textContent = '🌐 Live';
                 document.body.appendChild(indicator);
-                
+
                 setTimeout(() => indicator.style.opacity = '1', 1000);
                 setTimeout(() => indicator.style.opacity = '0', 4000);
                 setTimeout(() => indicator.remove(), 4500);

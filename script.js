@@ -343,14 +343,30 @@ class NutritionAnalyzer {
 
     async capturePhoto() {
         try {
-            // Check if device supports camera
-            if (this.isMobileDevice() && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                await this.openCameraStream();
+            // For mobile devices, create a temporary input with camera capture
+            if (this.isMobileDevice()) {
+                const tempInput = document.createElement('input');
+                tempInput.type = 'file';
+                tempInput.accept = 'image/*';
+                tempInput.capture = 'environment'; // This forces camera on mobile
+                tempInput.style.display = 'none';
+                document.body.appendChild(tempInput);
+                
+                tempInput.addEventListener('change', (e) => {
+                    if (e.target.files && e.target.files[0]) {
+                        this.processSelectedFile(e.target.files[0]);
+                    }
+                    document.body.removeChild(tempInput);
+                });
+                
+                tempInput.click();
             } else {
-                // Fallback: Use file input with camera capture
-                this.imageInput.setAttribute('capture', 'environment');
-                this.imageInput.setAttribute('accept', 'image/*');
-                this.imageInput.click();
+                // For desktop, try getUserMedia first, fallback to file input
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    await this.openCameraStream();
+                } else {
+                    this.imageInput.click();
+                }
             }
         } catch (error) {
             console.error('Camera access error:', error);
