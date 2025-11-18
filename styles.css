@@ -1221,9 +1221,22 @@ body::before {
     
     .calories-card {
         min-width: 200px;
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+        background: linear-gradient(135deg, #006400, #013220) !important;
         border-radius: 16px;
-        border: 2px solid rgba(99, 102, 241, 0.2);
+        border: 2px solid #32cd32;
+        color: #32cd32 !important;
+        box-shadow: 0 8px 32px rgba(0, 100, 0, 0.3);
+    }
+    
+    .calories-card h4 {
+        color: #32cd32 !important;
+        text-shadow: 0 0 10px rgba(50, 205, 50, 0.3);
+    }
+    
+    .calories-value {
+        color: #32cd32 !important;
+        text-shadow: 0 0 15px rgba(50, 205, 50, 0.4);
+        font-weight: 700;
     }
 }
 
@@ -3013,5 +3026,26 @@ body::before {
     
     .upload-actions {
         margin-top: 1.5rem;
+    }
+    
+    /* Enhanced calories card for mobile */
+    .calories-summary .calories-card {
+        background: linear-gradient(135deg, #006400 0%, #013220 100%) !important;
+        color: #32cd32 !important;
+        border: 2px solid #32cd32 !important;
+        box-shadow: 0 10px 30px rgba(0, 100, 0, 0.4), inset 0 1px 0 rgba(50, 205, 50, 0.2);
+    }
+    
+    .calories-summary .calories-card h4 {
+        color: #32cd32 !important;
+        font-weight: 600;
+        text-shadow: 0 0 8px rgba(50, 205, 50, 0.3);
+    }
+    
+    .calories-summary .calories-value {
+        color: #32cd32 !important;
+        font-weight: 700;
+        font-size: 2rem;
+        text-shadow: 0 0 12px rgba(50, 205, 50, 0.4);
     }
 }
