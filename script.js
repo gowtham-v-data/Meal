@@ -780,9 +780,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        console.log('Hill Calories AI initialized successfully');
-        console.log('Platform:', window.location.hostname);
-        console.log('API Endpoint:', API_ENDPOINT);
+        console.log('🚀 Hill Calories AI initialized successfully - Version 2.0');
+        console.log('🌐 Platform:', window.location.hostname);
+        console.log('📡 Current timestamp:', new Date().toISOString());
         
     } catch (error) {
         errorTracker.log(error, 'Application initialization');
