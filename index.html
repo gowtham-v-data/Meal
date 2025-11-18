@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hill Calories AI - Instant nutrition analysis from meal photos using AI-powered image recognition">
+    <meta name="keywords" content="nutrition, calories, AI, meal analysis, food tracking, health, fitness">
+    <meta name="author" content="Hill Calories AI">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gowtham-v-data.github.io/Meal/">
+    <meta property="og:title" content="Hill Calories AI - Meal Nutrition Analyzer">
+    <meta property="og:description" content="Get instant nutrition analysis from meal photos using advanced AI technology">
+    <meta property="og:image" content="https://gowtham-v-data.github.io/Meal/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://gowtham-v-data.github.io/Meal/">
+    <meta property="twitter:title" content="Hill Calories AI - Meal Nutrition Analyzer">
+    <meta property="twitter:description" content="Get instant nutrition analysis from meal photos using advanced AI technology">
+    <meta property="twitter:image" content="https://gowtham-v-data.github.io/Meal/og-image.jpg">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Hill Calories AI">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🏔️%3C/text%3E%3C/svg%3E">
+    
+    <title>Hill Calories AI - Meal Nutrition Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <h1>🏔️ Hill Calories AI</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How it Works</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2 class="hero-title">Instant Nutrition Analysis from Your Meal Photos</h2>
+                    <p class="hero-subtitle">Upload or capture a photo of your meal and get detailed macronutrient breakdown in seconds using AI-powered analysis.</p>
+                    
+                    <!-- Image Upload Section -->
+                    <div class="upload-section">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-placeholder">
+                                <div class="upload-icon">📸</div>
+                                <h3>Upload or Capture Your Meal</h3>
+                                <p>Drag & drop an image here, or click to select</p>
+                                <input type="file" id="imageInput" accept="image/*" capture="environment">
+                            </div>
+                            <img id="previewImage" class="preview-image" style="display: none;" alt="Meal preview">
+                        </div>
+                        
+                        <div class="upload-actions">
+                            <button class="btn btn-primary" id="analyzeBtn" disabled>
+                                <span class="btn-text">Analyze Nutrition</span>
+                                <span class="btn-loading" style="display: none;">Analyzing...</span>
+                            </button>
+                            <button class="btn btn-secondary" id="captureBtn">📷 Take Photo</button>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <div class="results-header">
+                            <h3>Nutrition Analysis Results</h3>
+                        </div>
+                        <div class="nutrition-grid">
+                            <div class="nutrition-card protein">
+                                <div class="nutrition-icon">🥩</div>
+                                <div class="nutrition-info">
+                                    <h4>Protein</h4>
+                                    <span class="nutrition-value" id="proteinValue">0g</span>
+                                </div>
+                            </div>
+                            <div class="nutrition-card carbs">
+                                <div class="nutrition-icon">🍞</div>
+                                <div class="nutrition-info">
+                                    <h4>Carbs</h4>
+                                    <span class="nutrition-value" id="carbsValue">0g</span>
+                                </div>
+                            </div>
+                            <div class="nutrition-card fat">
+                                <div class="nutrition-icon">🥑</div>
+                                <div class="nutrition-info">
+                                    <h4>Fat</h4>
+                                    <span class="nutrition-value" id="fatValue">0g</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="calories-summary">
+                            <div class="calories-card">
+                                <h4>Total Calories</h4>
+                                <span class="calories-value" id="caloriesValue">0 kcal</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div class="error-message" id="errorMessage" style="display: none;">
+                        <p>Something went wrong. Please try again with a different image.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose Hill Calories AI?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Instant Results</h3>
+                        <p>Get detailed nutrition analysis in under 3 seconds using advanced AI technology.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Mobile Optimized</h3>
+                        <p>Perfect for on-the-go nutrition tracking with responsive design and camera integration.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Accurate Analysis</h3>
+                        <p>Precise macronutrient breakdown including protein, carbs, fats, and total calories.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works Section -->
+        <section class="how-it-works" id="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Capture or Upload</h3>
+                        <p>Take a photo of your meal or upload an existing image from your device.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>AI Analysis</h3>
+                        <p>Our advanced AI processes the image to identify food items and calculate nutrition.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Get Results</h3>
+                        <p>Receive instant breakdown of protein, carbs, fat, and total calories in your meal.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Hill Calories AI. Built for instant nutrition insights.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

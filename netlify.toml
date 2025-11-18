@@ -1,0 +1,57 @@
+# Netlify Configuration for Hill Calories AI
+
+[build]
+  # No build process needed for static HTML/CSS/JS
+  publish = "."
+  command = "echo 'No build process required'"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Enable HTTPS camera access
+    Permissions-Policy = "camera=self, microphone=(), geolocation=(), payment=()"
+
+# Redirect rules for Meal endpoint
+[[redirects]]
+  from = "/webhook/Meal"
+  to = "https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal"
+  status = 200
+  force = true
+  
+[[redirects]]
+  from = "/api/*"
+  to = "https://danny-supercrowned-shawnda.ngrok-free.dev/:splat"
+  status = 200
+  force = true
+
+# Cache static assets
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# PWA support
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+
+# Enable SPA routing (if needed in future)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  conditions = {Role = ["admin"]}
