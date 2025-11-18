@@ -610,7 +610,7 @@ class NutritionAnalyzer {
 
         console.log('🌐 Analyzing meal with AI...');
         console.log('📡 Endpoint:', selectedEndpoint);
-        console.log('🖼️ Image size:', formData.get('image')?.size || 'unknown');
+        console.log('🖼️ Image size:', formData.get('image') ? .size || 'unknown');
 
         // Test endpoint availability first
         if (selectedEndpoint.includes('ngrok')) {
@@ -1127,14 +1127,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Close button in welcome notification - ROBUST EVENT HANDLING
             const closeBtn = document.querySelector('.welcome-actions .btn-close');
             const closeBtnById = document.getElementById('welcomeCloseBtn');
-            
+
             function setupCloseButton(btn) {
                 if (!btn) return;
-                
+
                 // Remove any existing event listeners by cloning
                 const freshBtn = btn.cloneNode(true);
                 btn.parentNode.replaceChild(freshBtn, btn);
-                
+
                 // Single, reliable click handler
                 freshBtn.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1142,7 +1142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('🔴 Close button clicked - hiding welcome');
                     hideWelcome();
                 });
-                
+
                 // Touch handler for mobile
                 freshBtn.addEventListener('touchend', function(e) {
                     e.preventDefault();
@@ -1150,11 +1150,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('🔴 Close button touched - hiding welcome');
                     hideWelcome();
                 });
-                
+
                 console.log('✅ Close button events attached successfully');
             }
-            
-            setupCloseButton(closeBtn || closeBtnById);            // Modal close buttons
+
+            setupCloseButton(closeBtn || closeBtnById); // Modal close buttons
             const modalCloseButtons = document.querySelectorAll('.modal-close');
             modalCloseButtons.forEach(btn => {
                 btn.addEventListener('click', function(e) {

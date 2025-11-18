@@ -2746,30 +2746,31 @@ body::before {
 
 /* CRITICAL MOBILE BUTTON FIXES - MUST BE LAST */
 @media (max-width: 768px) {
-    /* Mobile Hero Background Colors */
+    /* Mobile Hero Background Colors - Mint Green Theme */
     .hero {
         background: linear-gradient(135deg, 
-            #50e8d1 0%, 
-            #50e8d1 25%,
-            #0b0b08 50%,
-            #0b0b08 75%,
-            #0b0b08 100%) !important;
+            #98f5e1 0%, 
+            #a7f3d0 25%,
+            #6ee7b7 50%,
+            #34d399 75%,
+            #10b981 100%) !important;
     }
 
-    /* Ensure text is visible on new background */
+    /* Dark green text on mint green background */
     .hero .brand-title,
     .hero .brand-subtitle,
     .hero .hero-description,
     .hero .hero-tagline {
-        color: white !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7) !important;
+        color: #064e3b !important; /* Dark green */
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3) !important;
     }
 
-    /* Make brand gradient more visible on dark background */
+    /* Brand gradient with dark green color */
     .brand-gradient {
-        color: #50e8d1 !important;
-        -webkit-text-fill-color: #50e8d1 !important;
-        text-shadow: 0 2px 8px rgba(80, 232, 209, 0.5) !important;
+        color: #065f46 !important; /* Darker green for brand */
+        -webkit-text-fill-color: #065f46 !important;
+        text-shadow: 0 2px 4px rgba(6, 95, 70, 0.3) !important;
+        font-weight: 800 !important;
     }
 
     /* Force proper touch handling for ALL buttons */

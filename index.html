@@ -69,7 +69,7 @@
     </script>
 
     <title>Hill Calories - Smart Meal Analysis</title>
-    <link rel="stylesheet" href="styles.css?v=24">
+    <link rel="stylesheet" href="styles.css?v=25">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -82,14 +82,14 @@
                 <div class="logo">
                     <h1>🏔️ Calories AI</h1>
                 </div>
-                
+
                 <!-- Mobile Menu Button -->
                 <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                 </button>
-                
+
                 <!-- Desktop Navigation -->
                 <div class="nav-links desktop-nav">
                     <a href="#features">Features</a>
@@ -97,7 +97,7 @@
                 </div>
             </nav>
         </div>
-        
+
         <!-- Mobile Sidebar Menu -->
         <div class="mobile-sidebar" id="mobileSidebar">
             <div class="sidebar-header">
@@ -114,7 +114,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Mobile Sidebar Overlay -->
         <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileMenu()"></div>
     </header>
@@ -440,7 +440,7 @@
                         document.getElementById('welcomeNotification').style.display = 'none';
                         console.log('✅ Welcome closed via backup handler');
                     });
-                    
+
                     // Add touch event for mobile
                     closeBtn.addEventListener('touchend', function(e) {
                         e.preventDefault();
