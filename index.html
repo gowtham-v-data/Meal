@@ -35,11 +35,12 @@
 
     <!-- Performance Monitoring -->
     <script>
-        // Simple performance tracking
+        // Simple performance tracking - track from page start
+        const pageStartTime = performance.now ? performance.now() : Date.now();
         window.addEventListener('load', function() {
-            const loadTime = typeof performance !== 'undefined' && performance.now 
-                ? performance.now() 
-                : Date.now();
+            const loadTime = performance.now 
+                ? performance.now() - pageStartTime
+                : Date.now() - pageStartTime;
             console.log('🚀 App loaded in', Math.round(loadTime), 'ms');
             
             // Track user engagement
@@ -339,7 +340,7 @@
 
     <link rel="stylesheet" href="auth-styles.css">
     <script src="analytics.js"></script>
-    <script src="script.js?v=5"></script>
+    <script src="script.js?v=6"></script>
     
     <!-- Production Ready Notifications -->
     <script>
