@@ -393,10 +393,18 @@ class NutritionAnalyzer {
 
         console.log('✅ File validation passed');
         this.selectedImage = file;
+        
+        // Display preview first
         this.displayPreview(file);
-        this.enableAnalyzeButton();
+        
+        // Enable analyze button after a short delay to ensure DOM is ready
+        setTimeout(() => {
+            this.enableAnalyzeButton();
+            console.log('📝 Selected image stored:', file.name);
+        }, 100);
+        
         this.hideError();
-        console.log('✅ File processing complete');
+        console.log('✅ File processing complete - analyze button should be enabled');
     }
 
     displayPreview(file) {
@@ -414,6 +422,18 @@ class NutritionAnalyzer {
                     placeholder.style.display = 'none';
                 }
             }
+            
+            // Ensure analyze button is enabled (fallback)
+            setTimeout(() => {
+                this.enableAnalyzeButton();
+                console.log('🖼️ Image preview loaded - enabling analyze button');
+            }, 200);
+            
+            // Ensure analyze button is enabled (fallback)
+            setTimeout(() => {
+                this.enableAnalyzeButton();
+                console.log('🖼️ Image preview loaded - enabling analyze button');
+            }, 200);
         };
         reader.readAsDataURL(file);
     }
@@ -452,14 +472,46 @@ class NutritionAnalyzer {
     }
 
     enableAnalyzeButton() {
+        console.log('⚙️ Attempting to enable analyze button...');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        if (analyzeBtn) {
+            analyzeBtn.disabled = false;
+            analyzeBtn.style.opacity = '1';
+            analyzeBtn.style.cursor = 'pointer';
+            console.log('✅ Analyze button enabled successfully');
+            
+            // Update button text to show it's ready
+            const btnText = analyzeBtn.querySelector('.btn-text');
+            if (btnText) {
+                btnText.textContent = 'Analyze Nutrition';
+            }
+        } else {
+            console.error('❌ Analyze button not found when trying to enable');
+        }
+        
+        // Also update the class property
         if (this.analyzeBtn) {
             this.analyzeBtn.disabled = false;
+            this.analyzeBtn.style.opacity = '1';
+            this.analyzeBtn.style.cursor = 'pointer';
         }
     }
 
     disableAnalyzeButton() {
+        console.log('🚫 Disabling analyze button...');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        if (analyzeBtn) {
+            analyzeBtn.disabled = true;
+            analyzeBtn.style.opacity = '0.6';
+            analyzeBtn.style.cursor = 'not-allowed';
+            console.log('❌ Analyze button disabled');
+        }
+        
+        // Also update the class property
         if (this.analyzeBtn) {
             this.analyzeBtn.disabled = true;
+            this.analyzeBtn.style.opacity = '0.6';
+            this.analyzeBtn.style.cursor = 'not-allowed';
         }
     }
 
