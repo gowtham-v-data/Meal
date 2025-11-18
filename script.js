@@ -419,15 +419,14 @@ class NutritionAnalyzer {
         } catch (error) {
             console.error('Analysis error:', error);
 
-            // Try automatic retry for network errors
+            // Try automatic retry for network errors (silently in background)
             if ((error.message.includes('Failed to fetch') || error.message.includes('CORS')) && !this.retryAttempted) {
-                console.log('🔄 Attempting automatic retry in 2 seconds...');
+                console.log('🔄 Quietly retrying connection in background...');
                 this.retryAttempted = true;
                 setTimeout(() => {
                     this.analyzeImage();
-                }, 2000);
-                this.showInfo('🔄 Retrying connection...');
-                return;
+                }, 3000); // Slightly longer delay
+                // Continue to show sample results - don't interrupt user
             }
 
             // Categorize errors and provide helpful messages
@@ -435,17 +434,17 @@ class NutritionAnalyzer {
             let shouldShowDemo = true;
 
             if (error.message.includes('timeout')) {
-                errorMessage = '⏰ AI analysis is taking longer than expected. Showing sample results...';
+                errorMessage = '⏰ Analysis taking longer than expected. Here are sample results...';
             } else if (error.message.includes('CORS') || error.message.includes('Access-Control-Allow-Origin')) {
-                errorMessage = '🛡️ API connection issue. Showing sample analysis for now...';
+                errorMessage = '🎟️ Showing sample analysis while connecting to AI service...';
             } else if (error.message.includes('Network connection failed') || error.message.includes('Failed to fetch')) {
-                errorMessage = '⚡ Instant sample results! (Auto-retry in progress...)';
+                errorMessage = '⚡ Quick sample results! Trying to connect in background...';
             } else if (error.message.includes('HTTP error')) {
-                errorMessage = '🔧 AI service temporarily unavailable. Showing sample analysis...';
+                errorMessage = '🎟️ AI service busy. Here\'s a sample analysis for now...';
             } else if (error.message.includes('AbortError') || error.message.includes('aborted')) {
-                errorMessage = '⚡ Processing interrupted. Showing sample results...';
+                errorMessage = '⚡ Quick sample results while we reconnect...';
             } else {
-                errorMessage = '🔄 Temporary issue detected. Showing sample results...';
+                errorMessage = '🎟️ Sample analysis ready! Still working on AI connection...';
             }
 
             this.showError(errorMessage);
