@@ -33,14 +33,23 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🏔️%3C/text%3E%3C/svg%3E">
 
+    <script>window.pageLoadStart = Date.now();</script>
+    
     <!-- Performance Monitoring -->
     <script>
-        // Simple performance tracking - track from page start
-        const pageStartTime = performance.now ? performance.now() : Date.now();
+        // Simple performance tracking from actual navigation start
         window.addEventListener('load', function() {
-            const loadTime = performance.now 
-                ? performance.now() - pageStartTime
-                : Date.now() - pageStartTime;
+            let loadTime;
+            if (performance.timing) {
+                // Use Navigation Timing API for accurate measurement
+                loadTime = performance.timing.loadEventStart - performance.timing.navigationStart;
+            } else if (performance.now) {
+                // Fallback to performance.now()
+                loadTime = performance.now();
+            } else {
+                // Last resort fallback
+                loadTime = Date.now() - window.pageLoadStart;
+            }
             console.log('🚀 App loaded in', Math.round(loadTime), 'ms');
             
             // Track user engagement
@@ -340,7 +349,7 @@
 
     <link rel="stylesheet" href="auth-styles.css">
     <script src="analytics.js"></script>
-    <script src="script.js?v=8"></script>
+    <script src="script.js?v=9"></script>
     
     <!-- Production Ready Notifications -->
     <script>
