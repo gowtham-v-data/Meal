@@ -2746,6 +2746,32 @@ body::before {
 
 /* CRITICAL MOBILE BUTTON FIXES - MUST BE LAST */
 @media (max-width: 768px) {
+    /* Mobile Hero Background Colors */
+    .hero {
+        background: linear-gradient(135deg, 
+            #50e8d1 0%, 
+            #50e8d1 25%,
+            #0b0b08 50%,
+            #0b0b08 75%,
+            #0b0b08 100%) !important;
+    }
+
+    /* Ensure text is visible on new background */
+    .hero .brand-title,
+    .hero .brand-subtitle,
+    .hero .hero-description,
+    .hero .hero-tagline {
+        color: white !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7) !important;
+    }
+
+    /* Make brand gradient more visible on dark background */
+    .brand-gradient {
+        color: #50e8d1 !important;
+        -webkit-text-fill-color: #50e8d1 !important;
+        text-shadow: 0 2px 8px rgba(80, 232, 209, 0.5) !important;
+    }
+
     /* Force proper touch handling for ALL buttons */
     .btn, button, .btn-primary, .btn-close, .btn-login, .btn-signup, 
     .welcome-actions .btn, .auth-buttons button {
