@@ -14,8 +14,11 @@ class HillCaloriesAnalytics {
     init() {
         // Track page load performance
         window.addEventListener('load', () => {
+            const loadTime = typeof performance !== 'undefined' && performance.now 
+                ? Math.round(performance.now()) 
+                : Date.now() - this.startTime;
             this.trackEvent('page_load', {
-                loadTime: Math.round(performance.now()),
+                loadTime: loadTime,
                 url: window.location.href,
                 userAgent: navigator.userAgent.substring(0, 100),
                 timestamp: new Date().toISOString()
