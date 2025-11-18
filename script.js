@@ -331,12 +331,18 @@ class NutritionAnalyzer {
     displayPreview(file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-            this.previewImage.src = e.target.result;
-            this.previewImage.style.display = 'block';
+            if (this.previewImage) {
+                this.previewImage.src = e.target.result;
+                this.previewImage.style.display = 'block';
+            }
 
             // Hide upload placeholder
-            const placeholder = this.uploadArea.querySelector('.upload-placeholder');
-            placeholder.style.display = 'none';
+            if (this.uploadArea) {
+                const placeholder = this.uploadArea.querySelector('.upload-placeholder');
+                if (placeholder) {
+                    placeholder.style.display = 'none';
+                }
+            }
         };
         reader.readAsDataURL(file);
     }
@@ -375,24 +381,36 @@ class NutritionAnalyzer {
     }
 
     enableAnalyzeButton() {
-        this.analyzeBtn.disabled = false;
+        if (this.analyzeBtn) {
+            this.analyzeBtn.disabled = false;
+        }
     }
 
     disableAnalyzeButton() {
-        this.analyzeBtn.disabled = true;
+        if (this.analyzeBtn) {
+            this.analyzeBtn.disabled = true;
+        }
     }
 
     showLoading() {
         this.isAnalyzing = true;
-        this.btnText.style.display = 'none';
-        this.btnLoading.style.display = 'inline-flex';
+        if (this.btnText) {
+            this.btnText.style.display = 'none';
+        }
+        if (this.btnLoading) {
+            this.btnLoading.style.display = 'inline-flex';
+        }
         this.disableAnalyzeButton();
     }
 
     hideLoading() {
         this.isAnalyzing = false;
-        this.btnText.style.display = 'inline';
-        this.btnLoading.style.display = 'none';
+        if (this.btnText) {
+            this.btnText.style.display = 'inline';
+        }
+        if (this.btnLoading) {
+            this.btnLoading.style.display = 'none';
+        }
         if (this.selectedImage) {
             this.enableAnalyzeButton();
         }
@@ -592,7 +610,7 @@ class NutritionAnalyzer {
 
         console.log('🌐 Analyzing meal with AI...');
         console.log('📡 Endpoint:', selectedEndpoint);
-        console.log('🖼️ Image size:', formData.get('image') ? .size || 'unknown');
+        console.log('🖼️ Image size:', formData.get('image')?.size || 'unknown');
 
         // Test endpoint availability first
         if (selectedEndpoint.includes('ngrok')) {
@@ -879,21 +897,29 @@ class NutritionAnalyzer {
     }
 
     showError(message) {
-        this.errorMessage.textContent = message;
-        this.errorMessage.className = 'error-message';
-        this.errorMessage.style.display = 'block';
-        this.resultsSection.style.display = 'none';
+        if (this.errorMessage) {
+            this.errorMessage.textContent = message;
+            this.errorMessage.className = 'error-message';
+            this.errorMessage.style.display = 'block';
+        }
+        if (this.resultsSection) {
+            this.resultsSection.style.display = 'none';
+        }
     }
 
     showInfo(message) {
-        this.errorMessage.textContent = message;
-        this.errorMessage.className = 'error-message info-style';
-        this.errorMessage.style.display = 'block';
+        if (this.errorMessage) {
+            this.errorMessage.textContent = message;
+            this.errorMessage.className = 'error-message info-style';
+            this.errorMessage.style.display = 'block';
+        }
         // Don't hide results section for info messages
     }
 
     hideError() {
-        this.errorMessage.style.display = 'none';
+        if (this.errorMessage) {
+            this.errorMessage.style.display = 'none';
+        }
     }
 
     clearPreviousResults() {
@@ -901,10 +927,10 @@ class NutritionAnalyzer {
         this.resultsSection.style.display = 'none';
 
         // Clear nutrition values with loading placeholders
-        this.proteinValue.textContent = '...';
-        this.carbsValue.textContent = '...';
-        this.fatValue.textContent = '...';
-        this.caloriesValue.textContent = '...';
+        if (this.proteinValue) this.proteinValue.textContent = '...';
+        if (this.carbsValue) this.carbsValue.textContent = '...';
+        if (this.fatValue) this.fatValue.textContent = '...';
+        if (this.caloriesValue) this.caloriesValue.textContent = '...';
 
         // Clear food items
         const foodItemsContainer = document.getElementById('foodItemsContainer');
@@ -918,19 +944,27 @@ class NutritionAnalyzer {
     reset() {
         // Reset the analyzer state
         this.selectedImage = null;
-        this.previewImage.style.display = 'none';
-        this.previewImage.src = '';
+        if (this.previewImage) {
+            this.previewImage.style.display = 'none';
+            this.previewImage.src = '';
+        }
 
         // Show upload placeholder
-        const placeholder = this.uploadArea.querySelector('.upload-placeholder');
-        placeholder.style.display = 'flex';
+        if (this.uploadArea) {
+            const placeholder = this.uploadArea.querySelector('.upload-placeholder');
+            if (placeholder) {
+                placeholder.style.display = 'flex';
+            }
+        }
 
         // Reset buttons
         this.disableAnalyzeButton();
         this.hideLoading();
 
         // Hide results and errors
-        this.resultsSection.style.display = 'none';
+        if (this.resultsSection) {
+            this.resultsSection.style.display = 'none';
+        }
         this.hideError();
 
         // Clear food items
@@ -945,7 +979,9 @@ class NutritionAnalyzer {
         }
 
         // Clear file input
-        this.imageInput.value = '';
+        if (this.imageInput) {
+            this.imageInput.value = '';
+        }
     }
 }
 
@@ -1056,6 +1092,56 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Mobile-specific initialization and button fixes
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            // Add mobile-specific touch event handling
+            document.addEventListener('touchstart', function() {}, { passive: true });
+            console.log('📱 Mobile device detected - adding touch optimizations');
+        }
+        
+        // Fix all authentication buttons with direct event listeners
+        setTimeout(() => {
+            // Login button in welcome notification
+            const loginBtn = document.querySelector('.welcome-actions .btn-primary');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', showLogin);
+                loginBtn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    showLogin();
+                });
+                console.log('✅ Login button events attached');
+            }
+            
+            // Close button in welcome notification  
+            const closeBtn = document.querySelector('.welcome-actions .btn-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', hideWelcome);
+                closeBtn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    hideWelcome();
+                });
+                console.log('✅ Close button events attached');
+            }
+            
+            // Modal close buttons
+            const modalCloseButtons = document.querySelectorAll('.modal-close');
+            modalCloseButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.closest('#loginModal')) hideLogin();
+                    if (this.closest('#signupModal')) hideSignup();
+                });
+                btn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    if (this.closest('#loginModal')) hideLogin();
+                    if (this.closest('#signupModal')) hideSignup();
+                });
+            });
+            
+            console.log('✅ All authentication buttons initialized for mobile');
+        }, 100);
+
         console.log('🚀 Hill Calories AI initialized successfully - Version 2.0');
         console.log('🌐 Platform:', window.location.hostname);
         console.log('📡 Current timestamp:', new Date().toISOString());
@@ -1071,15 +1157,31 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 // Authentication Functions
 function showLogin() {
-    const modal = document.getElementById('loginModal');
-    modal.classList.add('show');
-    document.body.style.overflow = 'hidden';
+    try {
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            console.log('✅ Login modal opened');
+        } else {
+            console.error('❌ Login modal not found');
+        }
+    } catch (error) {
+        console.error('❌ Error showing login modal:', error);
+    }
 }
 
 function hideLogin() {
-    const modal = document.getElementById('loginModal');
-    modal.classList.remove('show');
-    document.body.style.overflow = 'auto';
+    try {
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            console.log('✅ Login modal closed');
+        }
+    } catch (error) {
+        console.error('❌ Error hiding login modal:', error);
+    }
 }
 
 function showSignup() {
@@ -1105,8 +1207,15 @@ function switchToLogin() {
 }
 
 function hideWelcome() {
-    const notification = document.getElementById('welcomeNotification');
-    notification.style.display = 'none';
+    try {
+        const notification = document.getElementById('welcomeNotification');
+        if (notification) {
+            notification.style.display = 'none';
+            console.log('✅ Welcome notification closed');
+        }
+    } catch (error) {
+        console.error('❌ Error hiding welcome notification:', error);
+    }
 }
 
 function handleLogin(event) {
