@@ -151,16 +151,6 @@
                                         <span class="upload-hint-mobile">📱 Tap to Choose Photo</span>
                                     </div>
                                 </div>
-                                <div class="upload-drop-overlay" id="uploadDropOverlay">
-                                    <div class="drop-message">
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                            <polyline points="7,10 12,15 17,10"/>
-                                            <line x1="12" y1="15" x2="12" y2="3"/>
-                                        </svg>
-                                        <h4>Drop your image here</h4>
-                                    </div>
-                                </div>
                                 <img id="previewImage" class="preview-image" style="display: none;" alt="Meal preview">
                                 <input type="file" id="imageInput" accept="image/*,image/jpeg,image/jpg,image/png,image/webp" style="display: none;">
                             </div>
@@ -472,7 +462,7 @@
 
     <link rel="stylesheet" href="auth-styles.css">
     <script src="analytics.js"></script>
-    <script src="script.js?v=31"></script>
+    <script src="script.js?v=32"></script>
 
     <!-- Production Ready Notifications -->
     <script>
@@ -481,7 +471,7 @@
             if (window.location.hostname.includes('github.io')) {
                 console.log('🌟 Hill Calories AI - Live on GitHub Pages!');
                 console.log('🔗 Share URL:', window.location.href);
-                
+
                 // Add upload diagnostics
                 setTimeout(() => {
                     const uploadArea = document.getElementById('uploadArea');
@@ -490,7 +480,7 @@
                     console.log('  - Upload area found:', !!uploadArea);
                     console.log('  - Image input found:', !!imageInput);
                     console.log('  - NutritionAnalyzer available:', !!window.nutritionAnalyzer);
-                    
+
                     if (uploadArea && imageInput) {
                         console.log('✅ Both upload elements found - testing click');
                         // Test if upload area is clickable

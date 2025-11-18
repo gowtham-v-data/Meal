@@ -339,12 +339,6 @@ class NutritionAnalyzer {
         if (this.uploadArea) {
             this.uploadArea.classList.add('drag-over');
         }
-        
-        // Show drop overlay
-        const dropOverlay = document.getElementById('uploadDropOverlay');
-        if (dropOverlay) {
-            dropOverlay.classList.add('active');
-        }
     }
 
     handleDragLeave(event) {
@@ -354,12 +348,6 @@ class NutritionAnalyzer {
         // Only remove class if we're leaving the upload area completely
         if (this.uploadArea && !this.uploadArea.contains(event.relatedTarget)) {
             this.uploadArea.classList.remove('drag-over');
-            
-            // Hide drop overlay
-            const dropOverlay = document.getElementById('uploadDropOverlay');
-            if (dropOverlay) {
-                dropOverlay.classList.remove('active');
-            }
         }
     }
 
@@ -371,12 +359,6 @@ class NutritionAnalyzer {
         
         if (this.uploadArea) {
             this.uploadArea.classList.remove('drag-over');
-        }
-        
-        // Hide drop overlay
-        const dropOverlay = document.getElementById('uploadDropOverlay');
-        if (dropOverlay) {
-            dropOverlay.classList.remove('active');
         }
         
         const files = event.dataTransfer.files;
@@ -1451,30 +1433,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Fix analyze button with multiple handlers
             if (analyzeBtn) {
-                const newAnalyzeBtn = analyzeBtn.cloneNode(true);
-                analyzeBtn.parentNode.replaceChild(newAnalyzeBtn, analyzeBtn);
-
-                newAnalyzeBtn.addEventListener('click', function(e) {
+                // Remove existing listeners and add new ones
+                analyzeBtn.onclick = null;
+                
+                analyzeBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('🔥 Analyze button clicked');
-                    if (window.nutritionAnalyzer && !this.disabled) {
+                    console.log('🔥 Analyze button clicked - disabled:', this.disabled);
+                    
+                    if (this.disabled) {
+                        console.log('⚠️ Button is disabled - please select an image first');
+                        alert('Please select an image first');
+                        return;
+                    }
+                    
+                    if (window.nutritionAnalyzer) {
+                        console.log('✅ Starting analysis...');
                         window.nutritionAnalyzer.analyzeImage();
                     } else {
-                        console.error('❌ Analyzer unavailable or button disabled');
-                        alert('Please select an image first');
+                        console.error('❌ Nutrition analyzer not available');
+                        alert('Analyzer not available. Please refresh the page.');
                     }
                 });
-
-                newAnalyzeBtn.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
+                
+                analyzeBtn.addEventListener('touchstart', function(e) {
                     console.log('📱 Analyze button touched');
-                });
-
+                }, { passive: true });
+                
                 console.log('✅ Analyze button enhanced initialization complete');
-            }
-
-            // Fix capture button with camera functionality
+            }            // Fix capture button with camera functionality
             if (captureBtn) {
                 const newCaptureBtn = captureBtn.cloneNode(true);
                 captureBtn.parentNode.replaceChild(newCaptureBtn, captureBtn);

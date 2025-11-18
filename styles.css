@@ -2160,46 +2160,7 @@ body::before {
     border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-.upload-drop-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(16, 185, 129, 0.1);
-    border-radius: 16px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    z-index: 10;
-}
 
-.upload-drop-overlay.active {
-    display: flex;
-}
-
-.drop-message {
-    text-align: center;
-    color: var(--accent-secondary);
-}
-
-.drop-message svg {
-    margin-bottom: 1rem;
-    animation: bounce 1s infinite;
-}
-
-.drop-message h4 {
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
-}
 
 .upload-placeholder h3 {
     font-size: 1.5rem;
