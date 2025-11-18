@@ -4,36 +4,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hill Calories AI - Enterprise-grade nutritional assessment platform delivering precision macronutrient analysis through advanced artificial intelligence">
-    <meta name="keywords" content="enterprise nutrition, AI nutritional analysis, professional meal assessment, macronutrient analytics, corporate wellness, precision nutrition platform">
-    <meta name="author" content="Hill Calories AI Professional Solutions">
+    <meta name="description" content="Hill Calories - Smart meal analysis with instant nutrition breakdown from photos using advanced AI technology">
+    <meta name="keywords" content="nutrition analysis, meal tracking, AI nutrition, food calories, macronutrient analysis, health tracking">
+    <meta name="author" content="Hill Calories">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://gowtham-v-data.github.io/Meal/">
-    <meta property="og:title" content="Hill Calories AI - Enterprise Nutritional Intelligence Platform">
-    <meta property="og:description" content="Advanced AI-powered nutritional assessment delivering precision macronutrient analysis for professional applications">
+    <meta property="og:title" content="Hill Calories - Smart Meal Analysis">
+    <meta property="og:description" content="Instant macronutrient breakdown from meal photos with AI-powered precision">
     <meta property="og:image" content="https://gowtham-v-data.github.io/Meal/og-image.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://gowtham-v-data.github.io/Meal/">
-    <meta property="twitter:title" content="Hill Calories AI - Enterprise Nutritional Intelligence Platform">
-    <meta property="twitter:description" content="Advanced AI-powered nutritional assessment delivering precision macronutrient analysis for professional applications">
+    <meta property="twitter:title" content="Hill Calories - Smart Meal Analysis">
+    <meta property="twitter:description" content="Instant macronutrient breakdown from meal photos with AI-powered precision">
     <meta property="twitter:image" content="https://gowtham-v-data.github.io/Meal/og-image.jpg">
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#6366f1">
+    <meta name="theme-color" content="#22C55E">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Hill Calories AI">
+    <meta name="apple-mobile-web-app-title" content="Hill Calories">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🏔️%3C/text%3E%3C/svg%3E">
 
-    <title>Hill Calories AI - Enterprise Nutritional Intelligence Platform</title>
+    <!-- Performance Monitoring -->
+    <script>
+        // Simple performance tracking
+        window.addEventListener('load', function() {
+            const loadTime = performance.now();
+            console.log('🚀 App loaded in', Math.round(loadTime), 'ms');
+            
+            // Track user engagement
+            let userActive = true;
+            let analyticsData = {
+                loadTime: Math.round(loadTime),
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent.substring(0, 100),
+                url: window.location.href
+            };
+            
+            // Log deployment success
+            console.log('📊 Hill Calories Analytics:', analyticsData);
+        });
+    </script>
+
+    <title>Hill Calories - Smart Meal Analysis</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,10 +66,11 @@
         <div class="container">
             <nav class="nav">
                 <div class="logo">
-                    <h1><span class="logo-hill">Hill</span> <span class="logo-calories">Calories</span></h1>
+                    <h1>🏔️ Calories AI</h1>
                 </div>
                 <div class="nav-links">
-                    <!-- Clean design - minimal navigation -->
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How it Works</a>
                 </div>
             </nav>
         </div>
@@ -60,45 +82,46 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="brand-header">
-                        <h1 class="brand-title"><span class="brand-hill">Hill</span> <span class="brand-calories">Calories</span></h1>
+                        <h1 class="brand-title">
+                            <span class="brand-gradient">Hill Calories</span>
+                        </h1>
                         <h2 class="brand-subtitle">Smart Meal Analysis</h2>
                     </div>
                     <p class="hero-description">Instant macronutrient breakdown from a single photo.</p>
                     <p class="hero-tagline">Track protein, carbs, and fats with AI precision.</p>
 
-                    <!-- Upload Section -->
+                    <!-- Upload Container -->
                     <div class="upload-container">
                         <div class="upload-card">
-                            <div class="upload-area" id="uploadArea">
+                            <div class="upload-zone" id="uploadArea">
                                 <div class="upload-placeholder">
                                     <div class="camera-icon">
-                                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
-                                            <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8C1 7.46957 1.21071 6.96086 1.58579 6.58579C1.96086 6.21071 2.46957 6 3 6H7L9 4H15L17 6H21C21.5304 6 22.0391 6.21071 22.4142 6.58579C22.7893 6.96086 23 7.46957 23 8V19Z" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <circle cx="12" cy="13" r="4" stroke="#22C55E" stroke-width="2"/>
+                                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                            <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8C1 7.46957 1.21071 6.96086 1.58579 6.58579C1.96086 6.21071 2.46957 6 3 6H7L9 4H15L17 6H21C21.5304 6 22.0391 6.21071 22.4142 6.58579C22.7893 6.96086 23 7.46957 23 8V19Z"/>
+                                            <circle cx="12" cy="13" r="4"/>
                                         </svg>
                                     </div>
-                                    <h3>Upload Your Meal</h3>
-                                    <p>Take a photo or upload an image • PNG, JPG up to 10MB</p>
+                                    <h3>Upload Your Meal Photo</h3>
+                                    <p>Drop an image here, or click to browse • PNG, JPG up to 10MB</p>
                                     <input type="file" id="imageInput" accept="image/*" capture="environment" style="display: none;">
                                 </div>
                                 <img id="previewImage" class="preview-image" style="display: none;" alt="Meal preview">
                             </div>
-                            
-                            <div class="upload-buttons">
-                                <button class="btn-take-photo" id="captureBtn">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                        <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8C1 7.46957 1.21071 6.96086 1.58579 6.58579C1.96086 6.21071 2.46957 6 3 6H7L9 4H15L17 6H21C21.5304 6 22.0391 6.21071 22.4142 6.58579C22.7893 6.96086 23 7.46957 23 8V19Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <circle cx="12" cy="13" r="4" stroke="white" stroke-width="2"/>
+
+                            <div class="action-buttons">
+                                <button class="btn-primary" id="analyzeBtn" disabled>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                    </svg>
+                                    <span class="btn-text">Analyze Nutrition</span>
+                                    <span class="btn-loading" style="display: none;">Analyzing...</span>
+                                </button>
+                                <button class="btn-secondary" id="captureBtn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8C1 7.46957 1.21071 6.96086 1.58579 6.58579C1.96086 6.21071 2.46957 6 3 6H7L9 4H15L17 6H21C21.5304 6 22.0391 6.21071 22.4142 6.58579C22.7893 6.96086 23 7.46957 23 8V19Z"/>
+                                        <circle cx="12" cy="13" r="4"/>
                                     </svg>
                                     Take Photo
-                                </button>
-                                <button class="btn-upload-image" onclick="document.getElementById('imageInput').click()">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <polyline points="7,10 12,15 17,10" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <line x1="12" y1="15" x2="12" y2="3" stroke="#6B7280" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                    Upload Image
                                 </button>
                             </div>
                         </div>
@@ -107,7 +130,7 @@
                     <!-- Results Section -->
                     <div class="results-section" id="resultsSection" style="display: none;">
                         <div class="results-header">
-                            <h3>Comprehensive Nutritional Assessment Report</h3>
+                            <h3>Nutrition Analysis Results</h3>
                         </div>
                         <div class="nutrition-grid">
                             <div class="nutrition-card protein">
@@ -148,12 +171,58 @@
             </div>
         </section>
 
-        <!-- Features and How it Works sections hidden for clean design -->
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <div class="container">
+                <h2 class="section-title">Enterprise-Grade Nutritional Intelligence Solutions</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Real-Time Analytics</h3>
+                        <p>Deliver comprehensive nutritional assessments within 3 seconds utilizing state-of-the-art machine learning algorithms and neural network processing capabilities.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Cross-Platform Excellence</h3>
+                        <p>Seamlessly integrated mobile-first architecture featuring advanced responsive design and professional-grade camera functionality for enterprise mobility solutions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Precision Analytics</h3>
+                        <p>Laboratory-grade macronutrient quantification with comprehensive protein, carbohydrate, lipid, and caloric energy assessment utilizing advanced analytical protocols.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works Section -->
+        <section class="how-it-works" id="how-it-works">
+            <div class="container">
+                <h2 class="section-title">Advanced Processing Methodology</h2>
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Image Acquisition Protocol</h3>
+                        <p>Deploy secure digital imaging through integrated camera systems or enterprise-grade file upload infrastructure with advanced image processing capabilities.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Neural Network Processing</h3>
+                        <p>Execute sophisticated computer vision algorithms and deep learning models to perform comprehensive food identification and nutritional composition analysis.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Comprehensive Reporting</h3>
+                        <p>Generate detailed analytical reports featuring precision macronutrient quantification, caloric density assessment, and comprehensive nutritional profiling data.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Hill Calories. Smart nutrition analysis powered by AI.</p>
+            <p>&copy; 2024 Hill Calories AI. Enterprise-Grade Nutritional Intelligence Solutions.</p>
         </div>
     </footer>
 
@@ -258,7 +327,7 @@
                 <button class="btn-signup" onclick="showSignup()">Sign Up</button>
             `;
             navLinks.appendChild(authButtons);
-            
+
             // Show welcome notification after 3 seconds
             setTimeout(() => {
                 document.getElementById('welcomeNotification').style.display = 'flex';
@@ -267,7 +336,36 @@
     </script>
 
     <link rel="stylesheet" href="auth-styles.css">
-    <script src="script.js?v=4"></script>
+    <script src="analytics.js"></script>
+    <script src="script.js?v=5"></script>
+    
+    <!-- Production Ready Notifications -->
+    <script>
+        // Show deployment success banner
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hostname.includes('github.io')) {
+                console.log('🌟 Hill Calories AI - Live on GitHub Pages!');
+                console.log('🔗 Share URL:', window.location.href);
+                
+                // Add subtle deployment indicator
+                const indicator = document.createElement('div');
+                indicator.style.cssText = `
+                    position: fixed; bottom: 20px; right: 20px; 
+                    background: linear-gradient(135deg, #10b981, #059669);
+                    color: white; padding: 8px 16px; border-radius: 20px;
+                    font-size: 12px; font-weight: 600; z-index: 9999;
+                    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+                    opacity: 0; transition: opacity 0.3s ease;
+                `;
+                indicator.textContent = '🌐 Live';
+                document.body.appendChild(indicator);
+                
+                setTimeout(() => indicator.style.opacity = '1', 1000);
+                setTimeout(() => indicator.style.opacity = '0', 4000);
+                setTimeout(() => indicator.remove(), 4500);
+            }
+        });
+    </script>
 </body>
 
 </html>
