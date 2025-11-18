@@ -793,3 +793,128 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { NutritionAnalyzer, utils, performance, errorTracker };
 }
+// Authentication Functions
+function showLogin() {
+    const modal = document.getElementById('loginModal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function hideLogin() {
+    const modal = document.getElementById('loginModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
+
+function showSignup() {
+    const modal = document.getElementById('signupModal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function hideSignup() {
+    const modal = document.getElementById('signupModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
+
+function switchToSignup() {
+    hideLogin();
+    setTimeout(() => showSignup(), 150);
+}
+
+function switchToLogin() {
+    hideSignup();
+    setTimeout(() => showLogin(), 150);
+}
+
+function hideWelcome() {
+    const notification = document.getElementById('welcomeNotification');
+    notification.style.display = 'none';
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    console.log(' Login attempt:', { email, password: '***' });
+    
+    hideLogin();
+    hideWelcome();
+    
+    showNotification(' Welcome back! You are now logged in.', 'success');
+    updateAuthState(true, email);
+}
+
+function handleSignup(event) {
+    event.preventDefault();
+    const name = document.getElementById('signupName').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    if (password !== confirmPassword) {
+        showNotification(' Passwords do not match!', 'error');
+        return;
+    }
+    
+    console.log(' Signup attempt:', { name, email, password: '***' });
+    
+    hideSignup();
+    hideWelcome();
+    
+    showNotification(' Account created successfully! Welcome!', 'success');
+    updateAuthState(true, email);
+}
+
+function updateAuthState(isLoggedIn, userEmail = '') {
+    const authButtons = document.querySelector('.auth-buttons');
+    if (isLoggedIn) {
+        authButtons.innerHTML = 
+            <span class="user-info"> ${userEmail.split('@')[0]}</span>
+            <button class="btn-logout" onclick="handleLogout()">Logout</button>
+        ;
+    }
+}
+
+function handleLogout() {
+    console.log(' User logged out');
+    updateAuthState(false);
+    showNotification(' Logged out successfully!', 'info');
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = 
+otification notification-;
+    notification.innerHTML = 
+        <div class="notification-content">
+            <span></span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()"></button>
+        </div>
+    ;
+    
+    notification.style.cssText = 
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(25px);
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border-left: 4px solid ;
+        z-index: 10002;
+        max-width: 350px;
+        animation: slideInRight 0.3s ease-out;
+    ;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 5000);
+}

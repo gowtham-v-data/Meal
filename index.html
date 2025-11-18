@@ -181,6 +181,96 @@
         </div>
     </footer>
 
-    <script src="script.js?v=2"></script>
+    <!-- Login Welcome Notification -->
+    <div id="welcomeNotification" class="welcome-notification">
+        <div class="welcome-content">
+            <div class="welcome-icon">👋</div>
+            <h3>Welcome to Hill Calories AI!</h3>
+            <p>Please log in to continue and unlock premium nutrition analysis features.</p>
+            <div class="welcome-actions">
+                <button class="btn btn-primary" onclick="showLogin()">Login to Continue</button>
+                <button class="btn-close" onclick="hideWelcome()">×</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="auth-modal">
+        <div class="auth-modal-content">
+            <div class="auth-header">
+                <h2>Welcome Back! 👋</h2>
+                <button class="modal-close" onclick="hideLogin()">×</button>
+            </div>
+            <form class="auth-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Your password">
+                </div>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary full-width">Sign In</button>
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+                <div class="social-login">
+                    <button type="button" class="btn-social btn-google">📱 Continue with Google</button>
+                    <button type="button" class="btn-social btn-facebook">📘 Continue with Facebook</button>
+                </div>
+                <p class="auth-switch">Don't have an account? <a href="#" onclick="switchToSignup()">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="auth-modal">
+        <div class="auth-modal-content">
+            <div class="auth-header">
+                <h2>Join Hill Calories AI! 🚀</h2>
+                <button class="modal-close" onclick="hideSignup()">×</button>
+            </div>
+            <form class="auth-form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="Create a strong password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required placeholder="Confirm your password">
+                </div>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" required> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary full-width">Create Account</button>
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+                <div class="social-login">
+                    <button type="button" class="btn-social btn-google">📱 Continue with Google</button>
+                    <button type="button" class="btn-social btn-facebook">📘 Continue with Facebook</button>
+                </div>
+                <p class="auth-switch">Already have an account? <a href="#" onclick="switchToLogin()">Sign in</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Welcome Notification -->\n    <div id="welcomeNotification" class="welcome-notification">\n        <div class="welcome-content">\n            <div class="welcome-icon">👋</div>\n            <h3>Welcome to Hill Calories AI!</h3>\n            <p>Please log in to continue and unlock premium nutrition analysis features.</p>\n            <div class="welcome-actions">\n                <button class="btn btn-primary" onclick="showLogin()">Login to Continue</button>\n                <button class="btn-close" onclick="hideWelcome()">×</button>\n            </div>\n        </div>\n    </div>\n\n    <!-- Auth Buttons for Navigation -->\n    <style>\n    .nav .auth-buttons {\n        display: flex;\n        gap: var(--spacing-3);\n        margin-left: auto;\n    }\n    .nav .btn-login, .nav .btn-signup {\n        padding: 0.5rem 1rem;\n        border-radius: 8px;\n        font-weight: 600;\n        font-size: 0.9rem;\n        cursor: pointer;\n        transition: all 0.3s ease;\n    }\n    .nav .btn-login {\n        background: transparent;\n        color: var(--primary-color);\n        border: 2px solid var(--primary-color);\n    }\n    .nav .btn-signup {\n        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));\n        color: white;\n        border: none;\n    }\n    .nav .btn-login:hover {\n        background: var(--primary-color);\n        color: white;\n        transform: translateY(-2px);\n    }\n    .nav .btn-signup:hover {\n        transform: translateY(-2px);\n        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);\n    }\n    </style>\n\n    <!-- Login Modal -->\n    <div id="loginModal" class="auth-modal">\n        <div class="auth-modal-content">\n            <div class="auth-header">\n                <h2>Welcome Back! 👋</h2>\n                <button class="modal-close" onclick="hideLogin()">×</button>\n            </div>\n            <form class="auth-form" onsubmit="handleLogin(event)">\n                <div class="form-group">\n                    <label for="loginEmail">Email Address</label>\n                    <input type="email" id="loginEmail" required placeholder="your@email.com">\n                </div>\n                <div class="form-group">\n                    <label for="loginPassword">Password</label>\n                    <input type="password" id="loginPassword" required placeholder="Your password">\n                </div>\n                <div class="form-options">\n                    <label class="checkbox-label">\n                        <input type="checkbox"> Remember me\n                    </label>\n                    <a href="#" class="forgot-link">Forgot password?</a>\n                </div>\n                <button type="submit" class="btn btn-primary full-width">Sign In</button>\n                <div class="auth-divider">\n                    <span>or</span>\n                </div>\n                <div class="social-login">\n                    <button type="button" class="btn-social btn-google">📱 Continue with Google</button>\n                    <button type="button" class="btn-social btn-facebook">📘 Continue with Facebook</button>\n                </div>\n                <p class="auth-switch">Don't have an account? <a href="#" onclick="switchToSignup()">Sign up</a></p>\n            </form>\n        </div>\n    </div>\n\n    <!-- Signup Modal -->\n    <div id="signupModal" class="auth-modal">\n        <div class="auth-modal-content">\n            <div class="auth-header">\n                <h2>Join Hill Calories AI! 🚀</h2>\n                <button class="modal-close" onclick="hideSignup()">×</button>\n            </div>\n            <form class="auth-form" onsubmit="handleSignup(event)">\n                <div class="form-group">\n                    <label for="signupName">Full Name</label>\n                    <input type="text" id="signupName" required placeholder="Your full name">\n                </div>\n                <div class="form-group">\n                    <label for="signupEmail">Email Address</label>\n                    <input type="email" id="signupEmail" required placeholder="your@email.com">\n                </div>\n                <div class="form-group">\n                    <label for="signupPassword">Password</label>\n                    <input type="password" id="signupPassword" required placeholder="Create a strong password">\n                </div>\n                <div class="form-group">\n                    <label for="confirmPassword">Confirm Password</label>\n                    <input type="password" id="confirmPassword" required placeholder="Confirm your password">\n                </div>\n                <div class="form-options">\n                    <label class="checkbox-label">\n                        <input type="checkbox" required> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>\n                    </label>\n                </div>\n                <button type="submit" class="btn btn-primary full-width">Create Account</button>\n                <div class="auth-divider">\n                    <span>or</span>\n                </div>\n                <div class="social-login">\n                    <button type="button" class="btn-social btn-google">📱 Continue with Google</button>\n                    <button type="button" class="btn-social btn-facebook">📘 Continue with Facebook</button>\n                </div>\n                <p class="auth-switch">Already have an account? <a href="#" onclick="switchToLogin()">Sign in</a></p>\n            </form>\n        </div>\n    </div>\n\n    <script>\n    // Add auth buttons to navigation\n    document.addEventListener('DOMContentLoaded', function() {\n        const navLinks = document.querySelector('.nav-links');\n        const authButtons = document.createElement('div');\n        authButtons.className = 'auth-buttons';\n        authButtons.innerHTML = `\n            <button class="btn-login" onclick="showLogin()">Login</button>\n            <button class="btn-signup" onclick="showSignup()">Sign Up</button>\n        `;\n        navLinks.appendChild(authButtons);\n        \n        // Show welcome notification after 2 seconds\n        setTimeout(() => {\n            document.getElementById('welcomeNotification').style.display = 'flex';\n        }, 3000);\n    });\n    </script>\n    \n    <script src="script.js?v=4"></script>
 </body>
 </html>
