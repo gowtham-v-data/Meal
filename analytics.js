@@ -14,9 +14,9 @@ class HillCaloriesAnalytics {
     init() {
         // Track page load performance
         window.addEventListener('load', () => {
-            const loadTime = typeof performance !== 'undefined' && performance.now 
-                ? Math.round(performance.now()) 
-                : Date.now() - this.startTime;
+            const loadTime = typeof performance !== 'undefined' && performance.now ?
+                Math.round(performance.now()) :
+                Date.now() - this.startTime;
             this.trackEvent('page_load', {
                 loadTime: loadTime,
                 url: window.location.href,
@@ -29,7 +29,7 @@ class HillCaloriesAnalytics {
         document.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
                 this.trackEvent('button_click', {
-                    buttonText: e.target.textContent?.substring(0, 50),
+                    buttonText: e.target.textContent ? .substring(0, 50),
                     buttonId: e.target.id || 'unknown'
                 });
             }
@@ -65,7 +65,7 @@ class HillCaloriesAnalytics {
         };
 
         this.events.push(event);
-        
+
         // Keep only last 100 events to prevent memory issues
         if (this.events.length > 100) {
             this.events.shift();
@@ -85,7 +85,7 @@ class HillCaloriesAnalytics {
         };
 
         console.log('📈 Analytics Report:', report);
-        
+
         // In production, you could send this to your analytics service
         // fetch('/analytics', { method: 'POST', body: JSON.stringify(report) });
     }
@@ -110,9 +110,9 @@ class HillCaloriesAnalytics {
     }
 
     trackAnalysisResult(resultType, nutritionData = null) {
-        this.trackEvent('analysis_result', { 
-            resultType, 
-            hasNutritionData: !!nutritionData 
+        this.trackEvent('analysis_result', {
+            resultType,
+            hasNutritionData: !!nutritionData
         });
     }
 }

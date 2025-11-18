@@ -34,7 +34,7 @@ class NutritionAnalyzer {
         this.selectedImage = null;
         this.cameraModal = null;
         this.videoStream = null;
-        
+
         // Production tracking
         this.sessionStats = {
             startTime: Date.now(),
@@ -43,7 +43,7 @@ class NutritionAnalyzer {
             demoResultsShown: 0,
             realResultsShown: 0
         };
-        
+
         // Start background connection monitoring
         this.startConnectionMonitoring();
     }
@@ -351,14 +351,14 @@ class NutritionAnalyzer {
                 tempInput.capture = 'environment'; // This forces camera on mobile
                 tempInput.style.display = 'none';
                 document.body.appendChild(tempInput);
-                
+
                 tempInput.addEventListener('change', (e) => {
                     if (e.target.files && e.target.files[0]) {
                         this.processSelectedFile(e.target.files[0]);
                     }
                     document.body.removeChild(tempInput);
                 });
-                
+
                 tempInput.click();
             } else {
                 // For desktop, try getUserMedia first, fallback to file input
@@ -467,7 +467,7 @@ class NutritionAnalyzer {
 
             // Show sample results with clear user notification
             console.log('🎯 Displaying sample results due to API issue. Error:', error.message);
-            
+
             // Add specific help for CORS errors
             if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
                 console.log('🛠️ CORS Fix: Your webhook needs these headers:');
@@ -475,7 +475,7 @@ class NutritionAnalyzer {
                 console.log('   Access-Control-Allow-Methods: POST, OPTIONS');
                 console.log('📄 See CORS-FIX.md for complete instructions');
             }
-            
+
             if (shouldShowDemo) {
                 // Show sample results immediately for better UX
                 setTimeout(() => {
@@ -496,14 +496,14 @@ class NutritionAnalyzer {
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second test
-            
-            const response = await fetch(url, { 
-                method: 'HEAD', 
+
+            const response = await fetch(url, {
+                method: 'HEAD',
                 mode: 'no-cors',
                 headers: { 'ngrok-skip-browser-warning': 'true' },
                 signal: controller.signal
             });
-            
+
             clearTimeout(timeoutId);
             console.log('✅ Quick connection test passed');
             return true;
@@ -515,8 +515,8 @@ class NutritionAnalyzer {
 
     async testEndpoint(url) {
         try {
-            const response = await fetch(url, { 
-                method: 'HEAD', 
+            const response = await fetch(url, {
+                method: 'HEAD',
                 mode: 'no-cors',
                 headers: { 'ngrok-skip-browser-warning': 'true' }
             });
@@ -529,17 +529,17 @@ class NutritionAnalyzer {
 
     startConnectionMonitoring() {
         // Check connection every 30 seconds in background
-        setInterval(async () => {
+        setInterval(async() => {
             const isOnline = navigator.onLine;
             if (!isOnline) {
                 console.log('📴 Offline detected - sample mode ready');
                 return;
             }
-            
+
             // Quick connectivity test (doesn't affect user experience)
             try {
-                await fetch('https://httpbin.org/get', { 
-                    method: 'HEAD', 
+                await fetch('https://httpbin.org/get', {
+                    method: 'HEAD',
                     mode: 'no-cors',
                     signal: AbortSignal.timeout(2000)
                 });
@@ -562,7 +562,7 @@ class NutritionAnalyzer {
         retryBtn.className = 'btn-secondary retry-btn';
         retryBtn.innerHTML = '🔄 Try Real Analysis';
         retryBtn.style.marginTop = '1rem';
-        
+
         retryBtn.addEventListener('click', () => {
             this.retryAttempted = false;
             this.hideError();
@@ -592,8 +592,8 @@ class NutritionAnalyzer {
 
         console.log('🌐 Analyzing meal with AI...');
         console.log('📡 Endpoint:', selectedEndpoint);
-        console.log('🖼️ Image size:', formData.get('image')?.size || 'unknown');
-        
+        console.log('🖼️ Image size:', formData.get('image') ? .size || 'unknown');
+
         // Test endpoint availability first
         if (selectedEndpoint.includes('ngrok')) {
             console.log('🔍 Testing ngrok endpoint availability...');
@@ -636,7 +636,7 @@ class NutritionAnalyzer {
                         mode: 'no-cors',
                         signal: controller.signal
                     });
-                    
+
                     if (response.type === 'opaque') {
                         console.log('📦 Got opaque response - CORS is blocking data access');
                         throw new Error('CORS policy blocked - server needs Access-Control-Allow-Origin header');
@@ -812,36 +812,45 @@ class NutritionAnalyzer {
 
     displayMockResults() {
         // Realistic sample meals for better demonstration
-        const sampleMeals = [
-            { 
-                protein: 28, carbohydrates: 45, fat: 12, 
+        const sampleMeals = [{
+                protein: 28,
+                carbohydrates: 45,
+                fat: 12,
                 name: 'Grilled Chicken & Rice Bowl',
                 description: 'Balanced protein and carb combination'
             },
-            { 
-                protein: 22, carbohydrates: 38, fat: 18, 
+            {
+                protein: 22,
+                carbohydrates: 38,
+                fat: 18,
                 name: 'Salmon with Quinoa',
                 description: 'Omega-3 rich with complete protein'
             },
-            { 
-                protein: 15, carbohydrates: 52, fat: 8, 
+            {
+                protein: 15,
+                carbohydrates: 52,
+                fat: 8,
                 name: 'Pasta with Vegetables',
                 description: 'Carb-rich with moderate protein'
             },
-            { 
-                protein: 32, carbohydrates: 25, fat: 15, 
+            {
+                protein: 32,
+                carbohydrates: 25,
+                fat: 15,
                 name: 'High-Protein Power Bowl',
                 description: 'Ideal for post-workout nutrition'
             },
-            { 
-                protein: 18, carbohydrates: 42, fat: 14, 
+            {
+                protein: 18,
+                carbohydrates: 42,
+                fat: 14,
                 name: 'Mixed Salad with Protein',
                 description: 'Fresh vegetables with lean protein'
             }
         ];
 
         const selectedMeal = sampleMeals[Math.floor(Math.random() * sampleMeals.length)];
-        
+
         // Add realistic variations (±10% to simulate real analysis)
         const mockData = {
             protein: Math.round(selectedMeal.protein * (0.9 + Math.random() * 0.2)),
@@ -859,7 +868,7 @@ class NutritionAnalyzer {
         console.log(`🍽️ Sample analysis: ${selectedMeal.name}`);
         console.log(`📊 ${selectedMeal.description}`);
         console.log('💡 This is sample data - showing example nutrition analysis');
-        
+
         // Track sample usage for production insights
         if (typeof this.sessionStats !== 'undefined') {
             this.sessionStats.demoResultsShown++;
@@ -890,19 +899,19 @@ class NutritionAnalyzer {
     clearPreviousResults() {
         // Hide results section immediately
         this.resultsSection.style.display = 'none';
-        
+
         // Clear nutrition values with loading placeholders
         this.proteinValue.textContent = '...';
         this.carbsValue.textContent = '...';
         this.fatValue.textContent = '...';
         this.caloriesValue.textContent = '...';
-        
+
         // Clear food items
         const foodItemsContainer = document.getElementById('foodItemsContainer');
         if (foodItemsContainer) {
             foodItemsContainer.innerHTML = '';
         }
-        
+
         console.log('🔄 Cleared previous results - analyzing new image...');
     }
 
