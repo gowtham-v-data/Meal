@@ -333,25 +333,60 @@ class NutritionAnalyzer {
 
     handleDragOver(event) {
         event.preventDefault();
-        this.uploadArea.classList.add('dragover');
+        event.stopPropagation();
+        console.log('📥 Drag over detected');
+        
+        if (this.uploadArea) {
+            this.uploadArea.classList.add('drag-over');
+        }
+        
+        // Show drop overlay
+        const dropOverlay = document.getElementById('uploadDropOverlay');
+        if (dropOverlay) {
+            dropOverlay.classList.add('active');
+        }
     }
 
     handleDragLeave(event) {
         event.preventDefault();
-        this.uploadArea.classList.remove('dragover');
+        event.stopPropagation();
+        
+        // Only remove class if we're leaving the upload area completely
+        if (this.uploadArea && !this.uploadArea.contains(event.relatedTarget)) {
+            this.uploadArea.classList.remove('drag-over');
+            
+            // Hide drop overlay
+            const dropOverlay = document.getElementById('uploadDropOverlay');
+            if (dropOverlay) {
+                dropOverlay.classList.remove('active');
+            }
+        }
     }
 
     handleDrop(event) {
         event.preventDefault();
-        this.uploadArea.classList.remove('dragover');
-
+        event.stopPropagation();
+        
+        console.log('📥 Files dropped');
+        
+        if (this.uploadArea) {
+            this.uploadArea.classList.remove('drag-over');
+        }
+        
+        // Hide drop overlay
+        const dropOverlay = document.getElementById('uploadDropOverlay');
+        if (dropOverlay) {
+            dropOverlay.classList.remove('active');
+        }
+        
         const files = event.dataTransfer.files;
         if (files.length > 0) {
             const file = files[0];
+            console.log('📁 Dropped file:', file.name, file.type);
             if (file.type.startsWith('image/')) {
                 this.processSelectedFile(file);
             } else {
-                this.showError('Please select a valid image file.');
+                this.showError('Please select a valid image file (PNG, JPG, WebP).');
             }
         }
     }
