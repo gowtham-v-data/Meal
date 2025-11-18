@@ -69,7 +69,7 @@
     </script>
 
     <title>Hill Calories - Smart Meal Analysis</title>
-    <link rel="stylesheet" href="styles.css?v=21">
+    <link rel="stylesheet" href="styles.css?v=23">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -82,12 +82,41 @@
                 <div class="logo">
                     <h1>🏔️ Calories AI</h1>
                 </div>
-                <div class="nav-links">
+                
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                
+                <!-- Desktop Navigation -->
+                <div class="nav-links desktop-nav">
                     <a href="#features">Features</a>
                     <a href="#how-it-works">How it Works</a>
                 </div>
             </nav>
         </div>
+        
+        <!-- Mobile Sidebar Menu -->
+        <div class="mobile-sidebar" id="mobileSidebar">
+            <div class="sidebar-header">
+                <h2>🏔️ Hill Calories</h2>
+                <button class="close-sidebar" id="closeSidebar" aria-label="Close menu">×</button>
+            </div>
+            <div class="sidebar-content">
+                <nav class="sidebar-nav">
+                    <a href="#features" onclick="closeMobileMenu()">Features</a>
+                    <a href="#how-it-works" onclick="closeMobileMenu()">How it Works</a>
+                </nav>
+                <div class="sidebar-auth" id="sidebarAuth">
+                    <!-- Auth buttons will be added here by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileMenu()"></div>
     </header>
 
     <main>
@@ -341,15 +370,60 @@
             }
         }
 
+        // Mobile menu functions
+        function openMobileMenu() {
+            document.getElementById('mobileSidebar').classList.add('active');
+            document.getElementById('sidebarOverlay').classList.add('active');
+            document.getElementById('mobileMenuBtn').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileSidebar').classList.remove('active');
+            document.getElementById('sidebarOverlay').classList.remove('active');
+            document.getElementById('mobileMenuBtn').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelector('.nav-links');
-            const authButtons = document.createElement('div');
-            authButtons.className = 'auth-buttons';
-            authButtons.innerHTML = `
-                <button class="btn-login" onclick="showLogin()">Login</button>
-                <button class="btn-signup" onclick="showSignup()">Sign Up</button>
-            `;
-            navLinks.appendChild(authButtons);
+            // Setup desktop navigation auth buttons
+            const navLinks = document.querySelector('.desktop-nav');
+            if (navLinks) {
+                const authButtons = document.createElement('div');
+                authButtons.className = 'auth-buttons';
+                authButtons.innerHTML = `
+                    <button class="btn-login" onclick="showLogin()">Login</button>
+                    <button class="btn-signup" onclick="showLogin()">Sign Up</button>
+                `;
+                navLinks.appendChild(authButtons);
+            }
+
+            // Setup mobile navigation auth buttons
+            const sidebarAuth = document.getElementById('sidebarAuth');
+            if (sidebarAuth) {
+                sidebarAuth.innerHTML = `
+                    <button class="btn-login" onclick="showLogin(); closeMobileMenu();">Login</button>
+                    <button class="btn-signup" onclick="showSignup(); closeMobileMenu();">Sign Up</button>
+                `;
+            }
+
+            // Mobile menu button event listener
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', openMobileMenu);
+            }
+
+            // Close sidebar button event listener
+            const closeSidebar = document.getElementById('closeSidebar');
+            if (closeSidebar) {
+                closeSidebar.addEventListener('click', closeMobileMenu);
+            }
+
+            // Close menu when clicking nav links
+            const sidebarNavLinks = document.querySelectorAll('.sidebar-nav a');
+            sidebarNavLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
 
             // Show welcome notification after 3 seconds
             setTimeout(() => {
@@ -384,7 +458,7 @@
 
     <link rel="stylesheet" href="auth-styles.css">
     <script src="analytics.js"></script>
-    <script src="script.js?v=22"></script>
+    <script src="script.js?v=23"></script>
 
     <!-- Production Ready Notifications -->
     <script>
