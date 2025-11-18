@@ -437,21 +437,21 @@ class NutritionAnalyzer {
             if (error.message.includes('timeout')) {
                 errorMessage = '⏰ AI analysis is taking longer than expected. Showing sample results...';
             } else if (error.message.includes('CORS') || error.message.includes('Access-Control-Allow-Origin')) {
-                errorMessage = '🛡️ Security settings need adjustment. Showing demo results for now...';
+                errorMessage = '🛡️ API connection issue. Showing sample analysis for now...';
             } else if (error.message.includes('Network connection failed') || error.message.includes('Failed to fetch')) {
-                errorMessage = '⚡ Instant demo results! (Auto-retry in progress...)';
+                errorMessage = '⚡ Instant sample results! (Auto-retry in progress...)';
             } else if (error.message.includes('HTTP error')) {
                 errorMessage = '🔧 AI service temporarily unavailable. Showing sample analysis...';
             } else if (error.message.includes('AbortError') || error.message.includes('aborted')) {
-                errorMessage = '⚡ Processing interrupted. Showing demo results...';
+                errorMessage = '⚡ Processing interrupted. Showing sample results...';
             } else {
                 errorMessage = '🔄 Temporary issue detected. Showing sample results...';
             }
 
             this.showError(errorMessage);
 
-            // Show demo results with clear user notification
-            console.log('🎯 Displaying demo results due to API issue. Error:', error.message);
+            // Show sample results with clear user notification
+            console.log('🎯 Displaying sample results due to API issue. Error:', error.message);
             
             // Add specific help for CORS errors
             if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
@@ -462,13 +462,13 @@ class NutritionAnalyzer {
             }
             
             if (shouldShowDemo) {
-                // Show demo results immediately for better UX
+                // Show sample results immediately for better UX
                 setTimeout(() => {
                     this.clearPreviousResults(); // Clear old results first
                     this.showInfo(errorMessage);
                     this.displayMockResults();
                     this.addRetryButton();
-                }, 100); // Nearly instant demo results
+                }, 100); // Nearly instant sample results
             } else {
                 this.showError(errorMessage);
             }
@@ -517,7 +517,7 @@ class NutritionAnalyzer {
         setInterval(async () => {
             const isOnline = navigator.onLine;
             if (!isOnline) {
-                console.log('📴 Offline detected - demo mode ready');
+                console.log('📴 Offline detected - sample mode ready');
                 return;
             }
             
@@ -530,7 +530,7 @@ class NutritionAnalyzer {
                 });
                 console.log('🌐 Connection healthy');
             } catch (error) {
-                console.log('📶 Connection unstable - demo mode ready');
+                console.log('📶 Connection unstable - sample mode ready');
             }
         }, 30000);
     }
@@ -843,9 +843,9 @@ class NutritionAnalyzer {
 
         console.log(`🍽️ Sample analysis: ${selectedMeal.name}`);
         console.log(`📊 ${selectedMeal.description}`);
-        console.log('💡 This is demo data - integrate with your nutrition API for real analysis');
+        console.log('💡 This is sample data - showing example nutrition analysis');
         
-        // Track demo usage for production insights
+        // Track sample usage for production insights
         if (typeof this.sessionStats !== 'undefined') {
             this.sessionStats.demoResultsShown++;
             console.log('📈 Session stats:', this.sessionStats);
