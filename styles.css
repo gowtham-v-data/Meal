@@ -8,36 +8,36 @@
 }
 
 :root {
-    /* Professional & Attractive Color Palette */
-    --primary-color: #667eea;
-    --primary-hover: #5a67d8;
-    --primary-light: #90cdf4;
-    --secondary-color: #764ba2;
-    --accent-color: #f093fb;
-    --accent-secondary: #f5576c;
-    --success-color: #48bb78;
-    --warning-color: #ed8936;
-    --error-color: #f56565;
-    --info-color: #4299e1;
-    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* Ultra-Professional Sophisticated Color Palette */
+    --primary-color: #1a365d;
+    --primary-hover: #2d5a87;
+    --primary-light: #4299e1;
+    --secondary-color: #2b6cb0;
+    --accent-color: #3182ce;
+    --accent-secondary: #4299e1;
+    --success-color: #38a169;
+    --warning-color: #d69e2e;
+    --error-color: #e53e3e;
+    --info-color: #2b6cb0;
+    --background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
     --background-alt: #ffffff;
     --surface: rgba(255, 255, 255, 0.95);
     --surface-elevated: rgba(255, 255, 255, 0.98);
-    --text-primary: #2d3748;
-    --text-secondary: #4a5568;
-    --text-muted: #718096;
-    --text-light: rgba(255, 255, 255, 0.9);
-    --border: rgba(255, 255, 255, 0.2);
-    --border-light: rgba(255, 255, 255, 0.1);
-    --shadow: rgba(0, 0, 0, 0.1);
-    --shadow-colored: rgba(102, 126, 234, 0.25);
+    --text-primary: #1a202c;
+    --text-secondary: #2d3748;
+    --text-muted: #4a5568;
+    --text-light: rgba(255, 255, 255, 0.95);
+    --border: rgba(26, 54, 93, 0.15);
+    --border-light: rgba(26, 54, 93, 0.08);
+    --shadow: rgba(0, 0, 0, 0.15);
+    --shadow-colored: rgba(26, 54, 93, 0.25);
     
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    /* Professional Gradients */
+    --gradient-primary: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+    --gradient-secondary: linear-gradient(135deg, #2b6cb0 0%, #3182ce 100%);
+    --gradient-success: linear-gradient(135deg, #38a169 0%, #48bb78 100%);
+    --gradient-hero: linear-gradient(135deg, #0f2027 0%, #203a43 30%, #2c5364 70%, #2b6cb0 100%);
+    --gradient-card: linear-gradient(145deg, #ffffff 0%, #f7fafc 100%);
 
     /* Typography */
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;

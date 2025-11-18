@@ -16,17 +16,17 @@ class NutritionAnalyzer {
         this.captureBtn = document.getElementById('captureBtn');
         this.resultsSection = document.getElementById('resultsSection');
         this.errorMessage = document.getElementById('errorMessage');
-        
+
         // Result elements
         this.proteinValue = document.getElementById('proteinValue');
         this.carbsValue = document.getElementById('carbsValue');
         this.fatValue = document.getElementById('fatValue');
         this.caloriesValue = document.getElementById('caloriesValue');
-        
+
         // Button text elements
         this.btnText = this.analyzeBtn.querySelector('.btn-text');
         this.btnLoading = this.analyzeBtn.querySelector('.btn-loading');
-        
+
         this.selectedImage = null;
         this.cameraModal = null;
         this.videoStream = null;
@@ -36,13 +36,13 @@ class NutritionAnalyzer {
         try {
             // Request camera permissions
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: { 
+                video: {
                     facingMode: 'environment', // Use back camera on mobile
                     width: { ideal: 1920 },
                     height: { ideal: 1080 }
                 }
             });
-            
+
             this.videoStream = stream;
             this.createCameraModal(stream);
         } catch (error) {
@@ -71,17 +71,17 @@ class NutritionAnalyzer {
                 </div>
             </div>
         `;
-        
+
         document.body.appendChild(modal);
         this.cameraModal = modal;
-        
+
         // Get video element and start stream
         const video = modal.querySelector('.camera-video');
         video.srcObject = stream;
-        
+
         // Bind camera modal events
         this.bindCameraEvents(modal, video);
-        
+
         // Show modal with animation
         setTimeout(() => modal.classList.add('active'), 10);
     }
@@ -91,27 +91,27 @@ class NutritionAnalyzer {
         const captureBtn = modal.querySelector('.camera-capture-btn');
         const switchBtn = modal.querySelector('.camera-switch-btn');
         const canvas = modal.querySelector('.camera-canvas');
-        
+
         // Close modal
         const closeCamera = () => {
             this.closeCameraModal();
         };
-        
+
         closeBtn.addEventListener('click', closeCamera);
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeCamera();
         });
-        
+
         // Capture photo
         captureBtn.addEventListener('click', () => {
             this.captureFromVideo(video, canvas);
         });
-        
+
         // Switch camera (front/back)
         switchBtn.addEventListener('click', () => {
             this.switchCamera();
         });
-        
+
         // Keyboard shortcuts
         const handleKeyPress = (e) => {
             if (e.key === 'Escape') closeCamera();
@@ -120,7 +120,7 @@ class NutritionAnalyzer {
                 this.captureFromVideo(video, canvas);
             }
         };
-        
+
         document.addEventListener('keydown', handleKeyPress);
         modal._keyHandler = handleKeyPress;
     }
@@ -129,20 +129,20 @@ class NutritionAnalyzer {
         // Set canvas dimensions to match video
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
-        
+
         // Draw video frame to canvas
         const ctx = canvas.getContext('2d');
         ctx.drawImage(video, 0, 0);
-        
+
         // Convert canvas to blob
         canvas.toBlob((blob) => {
             if (blob) {
                 // Create file from blob
                 const file = new File([blob], 'camera-photo.jpg', { type: 'image/jpeg' });
-                
+
                 // Process the captured image
                 this.processSelectedFile(file);
-                
+
                 // Close camera modal
                 this.closeCameraModal();
             }
@@ -155,27 +155,27 @@ class NutritionAnalyzer {
             if (this.videoStream) {
                 this.videoStream.getTracks().forEach(track => track.stop());
             }
-            
+
             // Toggle between front and back camera
             const currentFacingMode = this.currentFacingMode || 'environment';
             const newFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
-            
+
             // Request new stream with different camera
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: { 
+                video: {
                     facingMode: newFacingMode,
                     width: { ideal: 1920 },
                     height: { ideal: 1080 }
                 }
             });
-            
+
             this.videoStream = stream;
             this.currentFacingMode = newFacingMode;
-            
+
             // Update video source
             const video = this.cameraModal.querySelector('.camera-video');
             video.srcObject = stream;
-            
+
         } catch (error) {
             console.error('Failed to switch camera:', error);
             this.showError('Unable to switch camera. Using current camera.');
@@ -189,15 +189,15 @@ class NutritionAnalyzer {
                 this.videoStream.getTracks().forEach(track => track.stop());
                 this.videoStream = null;
             }
-            
+
             // Remove event listeners
             if (this.cameraModal._keyHandler) {
                 document.removeEventListener('keydown', this.cameraModal._keyHandler);
             }
-            
+
             // Hide modal with animation
             this.cameraModal.classList.remove('active');
-            
+
             // Remove modal from DOM after animation
             setTimeout(() => {
                 if (this.cameraModal && this.cameraModal.parentNode) {
@@ -210,7 +210,7 @@ class NutritionAnalyzer {
 
     handleCameraError(error) {
         let message = 'Camera access failed. ';
-        
+
         if (error.name === 'NotAllowedError') {
             message += 'Please allow camera permissions and try again.';
         } else if (error.name === 'NotFoundError') {
@@ -220,9 +220,9 @@ class NutritionAnalyzer {
         } else {
             message += 'Please try using the file upload option instead.';
         }
-        
+
         this.showError(message);
-        
+
         // Fallback to file input
         setTimeout(() => {
             this.imageInput.setAttribute('capture', 'environment');
@@ -232,30 +232,30 @@ class NutritionAnalyzer {
 
     isMobileDevice() {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-               (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
-               window.matchMedia('(max-width: 768px)').matches;
+            (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
+            window.matchMedia('(max-width: 768px)').matches;
     }
 
     bindEvents() {
         // File input change
         this.imageInput.addEventListener('change', (e) => this.handleFileSelect(e));
-        
+
         // Upload area click
         this.uploadArea.addEventListener('click', () => {
             if (!this.selectedImage) {
                 this.imageInput.click();
             }
         });
-        
+
         // Drag and drop events
         this.uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
         this.uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         this.uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
-        
+
         // Button events
         this.analyzeBtn.addEventListener('click', () => this.analyzeImage());
         this.captureBtn.addEventListener('click', () => this.capturePhoto());
-        
+
         // Preview image click to change
         this.previewImage.addEventListener('click', () => this.imageInput.click());
     }
@@ -280,7 +280,7 @@ class NutritionAnalyzer {
     handleDrop(event) {
         event.preventDefault();
         this.uploadArea.classList.remove('dragover');
-        
+
         const files = event.dataTransfer.files;
         if (files.length > 0) {
             const file = files[0];
@@ -317,7 +317,7 @@ class NutritionAnalyzer {
         reader.onload = (e) => {
             this.previewImage.src = e.target.result;
             this.previewImage.style.display = 'block';
-            
+
             // Hide upload placeholder
             const placeholder = this.uploadArea.querySelector('.upload-placeholder');
             placeholder.style.display = 'none';
@@ -378,14 +378,14 @@ class NutritionAnalyzer {
             // Prepare FormData for API request
             const formData = new FormData();
             formData.append('image', this.selectedImage);
-            
+
             // Add additional metadata if needed
             formData.append('timestamp', new Date().toISOString());
             formData.append('source', 'web_upload');
 
             // Make API request
             const response = await this.makeNutritionRequest(formData);
-            
+
             if (response.success) {
                 this.displayResults(response.data);
             } else {
@@ -394,10 +394,10 @@ class NutritionAnalyzer {
 
         } catch (error) {
             console.error('Analysis error:', error);
-            
+
             // More detailed error messages based on error type
             let errorMessage = 'Failed to analyze image. ';
-            
+
             if (error.message.includes('HTTP error')) {
                 errorMessage += 'Server connection failed. Please check if the API is available.';
             } else if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
@@ -407,9 +407,9 @@ class NutritionAnalyzer {
             } else {
                 errorMessage += 'Please try again or contact support if the issue persists.';
             }
-            
+
             this.showError(errorMessage);
-            
+
             // Show mock results for demonstration (comment out in production)
             console.log('Showing mock results due to API error. Error details:', error.message);
             this.displayMockResults();
@@ -420,22 +420,22 @@ class NutritionAnalyzer {
 
     async makeNutritionRequest(formData) {
         // Webhook endpoint for meal analysis - /Meal is the critical endpoint
-        const isLocalhost = window.location.hostname === 'localhost' || 
-                           window.location.hostname === '127.0.0.1' ||
-                           window.location.port === '8000';
+        const isLocalhost = window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1' ||
+            window.location.port === '8000';
         const isGitHubPages = window.location.hostname.includes('github.io');
-        
-        const API_ENDPOINT = (isLocalhost || isGitHubPages)
-            ? 'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal'
-            : '/webhook/Meal'; // Other platforms use proxy
-        
+
+        const API_ENDPOINT = (isLocalhost || isGitHubPages) ?
+            'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal' :
+            '/webhook/Meal'; // Other platforms use proxy
+
         console.log('🌐 Current location:', window.location.href);
         console.log('🔍 Is localhost?:', isLocalhost);
         console.log('🔍 Is GitHub Pages?:', isGitHubPages);
         console.log('🎯 Selected API_ENDPOINT:', API_ENDPOINT);
         console.log('📋 FormData contents:', Array.from(formData.entries()));
         console.log('⚠️ Note: /webhook/Meal endpoint is essential for nutrition analysis');
-        
+
         try {
             const response = await fetch(API_ENDPOINT, {
                 method: 'POST',
@@ -459,10 +459,10 @@ class NutritionAnalyzer {
             console.log('Parsed response:', JSON.stringify(result, null, 2));
             console.log('Response type:', typeof result);
             console.log('Is array:', Array.isArray(result));
-            
+
             // Handle multiple possible response formats from your webhook
             let output = null;
-            
+
             // Format 1: Array with output object - [{output: {...}}]
             if (Array.isArray(result) && result.length > 0 && result[0] && result[0].output) {
                 output = result[0].output;
@@ -478,17 +478,17 @@ class NutritionAnalyzer {
                 output = result;
                 console.log('Format 3: Direct output object detected');
             }
-            
+
             if (output) {
                 console.log('Output object:', JSON.stringify(output, null, 2));
-                
+
                 // Verify the response has the expected structure
                 // Note: Your API returns descriptive status instead of "success"
                 if (output.food && output.total && Array.isArray(output.food)) {
                     console.log('Valid response structure detected');
                     console.log('Food items count:', output.food.length);
                     console.log('Total calories:', output.total.calories);
-                    
+
                     return {
                         success: true,
                         data: output
@@ -505,18 +505,18 @@ class NutritionAnalyzer {
                 console.error('Is array:', Array.isArray(result));
                 console.error('Has output property:', !!(result && result.output));
                 console.error('Has food property:', !!(result && result.food));
-                
+
                 throw new Error('Response format not recognized');
             }
         } catch (fetchError) {
             console.error('🔥 Fetch error:', fetchError);
-            
+
             // Check if it's a CORS or networking issue on GitHub Pages
             if (window.location.hostname.includes('github.io')) {
                 console.warn('⚠️ GitHub Pages detected - API calls may require direct endpoint');
                 console.log('💡 Ensure your API endpoint supports CORS for:', window.location.origin);
             }
-            
+
             throw fetchError;
         }
     }
@@ -524,7 +524,7 @@ class NutritionAnalyzer {
     displayResults(nutritionData) {
         // Handle both detailed food analysis and simple totals
         let totals;
-        
+
         if (nutritionData.total) {
             // Response from webhook with detailed food items
             totals = nutritionData.total;
@@ -547,15 +547,15 @@ class NutritionAnalyzer {
 
         // Show results with animation
         this.resultsSection.style.display = 'block';
-        this.resultsSection.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'nearest' 
+        this.resultsSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
         });
 
         // Add animation class
         this.resultsSection.style.opacity = '0';
         this.resultsSection.style.transform = 'translateY(20px)';
-        
+
         setTimeout(() => {
             this.resultsSection.style.transition = 'all 0.5s ease';
             this.resultsSection.style.opacity = '1';
@@ -570,24 +570,24 @@ class NutritionAnalyzer {
             foodItemsContainer = document.createElement('div');
             foodItemsContainer.id = 'foodItemsContainer';
             foodItemsContainer.className = 'food-items-container';
-            
+
             // Insert before nutrition grid
             const nutritionGrid = this.resultsSection.querySelector('.nutrition-grid');
             nutritionGrid.parentNode.insertBefore(foodItemsContainer, nutritionGrid);
         }
-        
+
         // Clear existing items
         foodItemsContainer.innerHTML = '';
-        
+
         if (foodItems && foodItems.length > 0) {
             const title = document.createElement('h4');
             title.textContent = foodItems.length === 1 ? 'Analyzed Food' : 'Detected Food Items';
             title.className = 'food-items-title';
             foodItemsContainer.appendChild(title);
-            
+
             const itemsList = document.createElement('div');
             itemsList.className = 'food-items-list';
-            
+
             foodItems.forEach(item => {
                 const foodItem = document.createElement('div');
                 foodItem.className = 'food-item';
@@ -603,7 +603,7 @@ class NutritionAnalyzer {
                 `;
                 itemsList.appendChild(foodItem);
             });
-            
+
             foodItemsContainer.appendChild(itemsList);
         }
     }
@@ -615,16 +615,16 @@ class NutritionAnalyzer {
             carbohydrates: Math.floor(Math.random() * 40) + 20, // 20-60g
             fat: Math.floor(Math.random() * 20) + 5, // 5-25g
         };
-        
+
         // Calculate calories (rough estimation)
         mockData.calories = Math.round(
-            (mockData.protein * 4) + 
-            (mockData.carbohydrates * 4) + 
+            (mockData.protein * 4) +
+            (mockData.carbohydrates * 4) +
             (mockData.fat * 9)
         );
 
         this.displayResults(mockData);
-        
+
         // Show info about mock data
         console.log('Displaying mock results for demonstration. Replace with actual API integration.');
     }
@@ -644,30 +644,30 @@ class NutritionAnalyzer {
         this.selectedImage = null;
         this.previewImage.style.display = 'none';
         this.previewImage.src = '';
-        
+
         // Show upload placeholder
         const placeholder = this.uploadArea.querySelector('.upload-placeholder');
         placeholder.style.display = 'flex';
-        
+
         // Reset buttons
         this.disableAnalyzeButton();
         this.hideLoading();
-        
+
         // Hide results and errors
         this.resultsSection.style.display = 'none';
         this.hideError();
-        
+
         // Clear food items
         const foodItemsContainer = document.getElementById('foodItemsContainer');
         if (foodItemsContainer) {
             foodItemsContainer.innerHTML = '';
         }
-        
+
         // Close camera if open
         if (this.cameraModal) {
             this.closeCameraModal();
         }
-        
+
         // Clear file input
         this.imageInput.value = '';
     }
@@ -696,17 +696,17 @@ const utils = {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
-            
+
             img.onload = () => {
                 const ratio = Math.min(maxWidth / img.width, maxWidth / img.height);
                 canvas.width = img.width * ratio;
                 canvas.height = img.height * ratio;
-                
+
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                
+
                 canvas.toBlob(resolve, 'image/jpeg', quality);
             };
-            
+
             img.src = URL.createObjectURL(file);
         });
     }
@@ -715,11 +715,11 @@ const utils = {
 // Performance monitoring
 const performance = {
     startTime: null,
-    
+
     start() {
         this.startTime = Date.now();
     },
-    
+
     end(operation) {
         if (this.startTime) {
             const duration = Date.now() - this.startTime;
@@ -739,7 +739,7 @@ const errorTracker = {
             timestamp: new Date().toISOString(),
             userAgent: navigator.userAgent
         });
-        
+
         // In production, send to error tracking service
         // Example: Sentry.captureException(error, { extra: { context } });
     }
@@ -750,7 +750,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
         // Initialize the nutrition analyzer
         window.nutritionAnalyzer = new NutritionAnalyzer();
-        
+
         // Add keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             // Press 'R' to reset
@@ -760,7 +760,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.nutritionAnalyzer.reset();
                 }
             }
-            
+
             // Press Enter to analyze (if image is selected)
             if (e.key === 'Enter') {
                 if (window.nutritionAnalyzer.selectedImage && !window.nutritionAnalyzer.isAnalyzing) {
@@ -768,7 +768,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-        
+
         // Handle visibility change (pause/resume when tab is hidden/visible)
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
@@ -779,11 +779,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('App resumed');
             }
         });
-        
+
         console.log('🚀 Hill Calories AI initialized successfully - Version 2.0');
         console.log('🌐 Platform:', window.location.hostname);
         console.log('📡 Current timestamp:', new Date().toISOString());
-        
+
     } catch (error) {
         errorTracker.log(error, 'Application initialization');
     }
@@ -837,13 +837,13 @@ function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
-    
-    console.log(' Login attempt:', { email, password: '***' });
-    
+
+    console.log('🔐 Login attempt:', { email, password: '***' });
+
     hideLogin();
     hideWelcome();
-    
-    showNotification(' Welcome back! You are now logged in.', 'success');
+
+    showNotification('🎉 Welcome back! You are now logged in.', 'success');
     updateAuthState(true, email);
 }
 
@@ -853,49 +853,48 @@ function handleSignup(event) {
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
-    
+
     if (password !== confirmPassword) {
-        showNotification(' Passwords do not match!', 'error');
+        showNotification('❌ Passwords do not match!', 'error');
         return;
     }
-    
-    console.log(' Signup attempt:', { name, email, password: '***' });
-    
+
+    console.log('📝 Signup attempt:', { name, email, password: '***' });
+
     hideSignup();
     hideWelcome();
-    
-    showNotification(' Account created successfully! Welcome!', 'success');
+
+    showNotification('🎉 Account created successfully! Welcome!', 'success');
     updateAuthState(true, email);
 }
 
 function updateAuthState(isLoggedIn, userEmail = '') {
     const authButtons = document.querySelector('.auth-buttons');
     if (isLoggedIn) {
-        authButtons.innerHTML = 
-            <span class="user-info"> ${userEmail.split('@')[0]}</span>
+        authButtons.innerHTML = `
+            <span class="user-info">${userEmail.split('@')[0]}</span>
             <button class="btn-logout" onclick="handleLogout()">Logout</button>
-        ;
+        `;
     }
 }
 
 function handleLogout() {
-    console.log(' User logged out');
+    console.log('👋 User logged out');
     updateAuthState(false);
-    showNotification(' Logged out successfully!', 'info');
+    showNotification('👋 Logged out successfully!', 'info');
 }
 
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
-    notification.className = 
-otification notification-;
-    notification.innerHTML = 
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
         <div class="notification-content">
-            <span></span>
-            <button class="notification-close" onclick="this.parentElement.parentElement.remove()"></button>
+            <span>${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
         </div>
-    ;
-    
-    notification.style.cssText = 
+    `;
+
+    notification.style.cssText = `
         position: fixed;
         top: 100px;
         right: 20px;
@@ -904,14 +903,14 @@ otification notification-;
         border-radius: 12px;
         padding: 1rem 1.5rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        border-left: 4px solid ;
+        border-left: 4px solid var(--primary-color);
         z-index: 10002;
         max-width: 350px;
         animation: slideInRight 0.3s ease-out;
-    ;
-    
+    `;
+
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         if (notification.parentElement) {
             notification.remove();
