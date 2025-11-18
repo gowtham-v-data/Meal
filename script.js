@@ -387,6 +387,9 @@ class NutritionAnalyzer {
             return;
         }
 
+        // Clear previous results immediately
+        this.clearPreviousResults();
+
         // Reset retry state on new analysis
         if (!this.retryAttempted) {
             this.retryAttempted = false;
@@ -461,6 +464,7 @@ class NutritionAnalyzer {
             if (shouldShowDemo) {
                 // Show demo results immediately for better UX
                 setTimeout(() => {
+                    this.clearPreviousResults(); // Clear old results first
                     this.showInfo(errorMessage);
                     this.displayMockResults();
                     this.addRetryButton();
@@ -866,6 +870,25 @@ class NutritionAnalyzer {
 
     hideError() {
         this.errorMessage.style.display = 'none';
+    }
+
+    clearPreviousResults() {
+        // Hide results section immediately
+        this.resultsSection.style.display = 'none';
+        
+        // Clear nutrition values with loading placeholders
+        this.proteinValue.textContent = '...';
+        this.carbsValue.textContent = '...';
+        this.fatValue.textContent = '...';
+        this.caloriesValue.textContent = '...';
+        
+        // Clear food items
+        const foodItemsContainer = document.getElementById('foodItemsContainer');
+        if (foodItemsContainer) {
+            foodItemsContainer.innerHTML = '';
+        }
+        
+        console.log('🔄 Cleared previous results - analyzing new image...');
     }
 
     reset() {
