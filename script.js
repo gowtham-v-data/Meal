@@ -260,13 +260,31 @@ class NutritionAnalyzer {
 
         // Upload area click - always open file browser
         if (this.uploadArea) {
-            this.uploadArea.addEventListener('click', () => {
+            this.uploadArea.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 if (this.imageInput) {
                     console.log('📤 Upload area clicked - opening file browser');
+                    console.log('📍 Click target:', e.target.tagName, e.target.className);
                     this.imageInput.click(); // Open file browser on all devices
+                } else {
+                    console.error('❌ Image input not found');
                 }
-            });
+            }, true); // Use capture phase to ensure we get the event first
 
+            // Add specific handler for camera icon area
+            const cameraIcon = this.uploadArea.querySelector('.camera-icon');
+            if (cameraIcon) {
+                cameraIcon.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('📷 Camera icon clicked - opening file browser');
+                    if (this.imageInput) {
+                        this.imageInput.click();
+                    }
+                });
+            }
+            
             // Drag and drop events
             this.uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
             this.uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
@@ -1334,13 +1352,36 @@ document.addEventListener('DOMContentLoaded', () => {
             if (uploadArea && imageInput) {
                 console.log('📤 Initializing upload area with multiple event handlers');
                 
-                // Add comprehensive click handlers (without cloning to prevent issues)
+                // Add comprehensive click handlers for entire upload area
                 uploadArea.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     console.log('📤 Fallback: Upload area clicked - opening file browser');
+                    console.log('📍 Fallback click target:', e.target.tagName, e.target.className);
                     imageInput.click();
                 }, true); // Use capture phase
+                
+                // Specific camera icon fallback handler
+                const cameraIcon = uploadArea.querySelector('.camera-icon');
+                const cameraSvg = uploadArea.querySelector('.camera-icon svg');
+                
+                if (cameraIcon) {
+                    cameraIcon.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('📷 Fallback: Camera icon clicked');
+                        imageInput.click();
+                    }, true);
+                }
+                
+                if (cameraSvg) {
+                    cameraSvg.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('🎯 Fallback: Camera SVG clicked');
+                        imageInput.click();
+                    }, true);
+                }
                 
                 uploadArea.addEventListener('touchstart', function(e) {
                     console.log('📱 Fallback: Upload area touched');
