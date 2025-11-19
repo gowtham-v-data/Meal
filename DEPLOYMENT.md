@@ -153,8 +153,8 @@ Add analytics by including in `index.html`:
 
 **Development (localhost):**
 ```javascript
-// Direct ngrok URL
-const API_ENDPOINT = 'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal';
+// Direct n8n URL
+const API_ENDPOINT = 'https://n8n-rx89.onrender.com/webhook/Meal';
 ```
 
 **Production (deployed):**
@@ -169,7 +169,7 @@ const API_ENDPOINT = '/webhook/Meal';
 - **GitHub Pages**: Requires CORS headers on your API
 
 ### Update Your Production API URL:
-1. Replace `danny-supercrowned-shawnda.ngrok-free.dev` with your production domain
+1. Replace `n8n-rx89.onrender.com` with your production domain if different
 2. Keep the `/webhook/Meal` path exactly as specified
 3. Ensure your API accepts POST requests with multipart/form-data
 

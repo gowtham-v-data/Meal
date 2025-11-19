@@ -573,6 +573,13 @@ class NutritionAnalyzer {
                 throw new Error(response.message || 'Analysis failed');
             }
 
+            // Track successful analysis
+            this.sessionStats.analysesRequested++;
+            this.sessionStats.demoResultsShown++;
+
+            console.log('✅ Analysis completed successfully');
+            console.log('📊 Session stats:', this.sessionStats);
+
         } catch (error) {
             console.error('Analysis error:', error);
 
@@ -723,7 +730,7 @@ class NutritionAnalyzer {
         const isGitHubPages = window.location.hostname.includes('github.io');
 
         const API_ENDPOINTS = [
-            'https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal',
+            'https://n8n-rx89.onrender.com/webhook/Meal',
             // Add backup endpoints here if available
         ];
 

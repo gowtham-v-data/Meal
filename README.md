@@ -55,7 +55,7 @@ npx http-server
 
 The application is specifically configured to work with the `/webhook/Meal` endpoint:
 
-**Development URL:** `https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal`
+**Development URL:** `https://n8n-rx89.onrender.com/webhook/Meal`
 **Production URL:** `/webhook/Meal` (proxied through deployment platform)
 
 ### Setting Up Your Nutrition API

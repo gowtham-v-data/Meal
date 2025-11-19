@@ -3,7 +3,7 @@
 ## 🔍 Complete Function Overview
 
 ### Current API Configuration
-- **Primary Endpoint**: `https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal`
+- **Primary Endpoint**: `https://n8n-rx89.onrender.com/webhook/Meal`
 - **Fallback**: `/webhook/Meal` (production proxy)
 - **Method**: POST with FormData
 - **Timeout**: 45 seconds
@@ -156,7 +156,7 @@ ngrok-skip-browser-warning: true
 ### Console Output Examples:
 ```
 🌐 Analyzing meal with AI...
-📡 Endpoint: https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal
+📡 Endpoint: https://n8n-rx89.onrender.com/webhook/Meal
 🖼️ Image size: 46690
 🔍 Testing ngrok endpoint availability...
 🚀 Sending request to: [endpoint]

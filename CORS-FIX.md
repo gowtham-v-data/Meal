@@ -14,7 +14,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-@app.route('/webhook-test/Meal', methods=['POST', 'OPTIONS'])
+@app.route('/webhook/Meal', methods=['POST', 'OPTIONS'])
 def meal_analysis():
     if request.method == 'OPTIONS':
         # Handle preflight request

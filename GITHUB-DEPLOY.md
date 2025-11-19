@@ -116,7 +116,7 @@ When ready for production, update the API endpoint in `script.js`:
 
 ```javascript
 // Replace with your production API
-const API_ENDPOINT = 'https://your-production-domain.com/webhook/Meal';
+const API_ENDPOINT = 'https://n8n-rx89.onrender.com/webhook/Meal';
 ```
 
 ---

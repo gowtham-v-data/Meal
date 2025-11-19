@@ -7,11 +7,11 @@
     }],
     "routes": [{
             "src": "/webhook/Meal",
-            "dest": "https://danny-supercrowned-shawnda.ngrok-free.dev/webhook/Meal"
+            "dest": "https://n8n-rx89.onrender.com/webhook/Meal"
         },
         {
             "src": "/api/(.*)",
-            "dest": "https://danny-supercrowned-shawnda.ngrok-free.dev/$1"
+            "dest": "https://n8n-rx89.onrender.com/$1"
         },
         {
             "src": "/(.*)",
